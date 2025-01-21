@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for CRUD functionality and database integration",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",               
+    "dev": "nodemon app.js",             
+    "lint": "eslint .",                  
+    "test": "echo \"No tests defined\" && exit 1" 
+  },
+  "keywords": [],
+  "author": "Dein Name",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "pg": "^8.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "nodemon": "^3.0.1"                
+  }
+}
