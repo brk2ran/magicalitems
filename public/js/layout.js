@@ -26,7 +26,7 @@ async function loadHeader() {
     if (footerContainer) {
       try {
         const basePath = getBasePath(); // Ermitteln des richtigen Pfads
-        const response = await fetch(`${basePath}header.html`);
+        const response = await fetch(`${basePath}footer.html`);
         const html = await response.text();
         footerContainer.innerHTML = html;
       } catch (error) {
