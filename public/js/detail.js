@@ -1,4 +1,4 @@
-const BASE_BACKEND_URL = "http://localhost:3000"; // Basis-URL des Backends
+const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
 
 // Funktion, um die Item-ID aus der URL zu extrahieren
 function getItemIdFromURL() {

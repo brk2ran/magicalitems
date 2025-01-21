@@ -1,6 +1,6 @@
 // public/js/app.js
 
-const BASE_BACKEND_URL = "http://localhost:3000"; // Basis-URL des Backends
+const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
 
 // Funktion zum Laden der Kategorien
 async function loadCategories() {

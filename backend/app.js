@@ -11,9 +11,14 @@ const { Pool } = require("pg");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const corsOptions = {
+  origin: "https://magicalitems.netlify.app", // Erlaube nur deine Frontend-Domain
+  methods: "GET,POST,PUT,DELETE", // Erlaube spezifische HTTP-Methoden
+  credentials: true, // Für Authentifizierung und Cookies, falls benötigt
+};
 
 // 3. Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
