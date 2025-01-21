@@ -1,11 +1,17 @@
 // public/js/layout.js
 
+function getBasePath() {
+  const path = window.location.pathname;
+  return path.includes("/pages/") ? "../components/" : "./components/";
+}
+
 // Funktion zum Laden des Headers
 async function loadHeader() {
     const headerContainer = document.getElementById("header");
     if (headerContainer) {
       try {
-        const response = await fetch("./components/header.html");
+        const basePath = getBasePath(); // Ermitteln des richtigen Pfads
+        const response = await fetch(`${basePath}header.html`);
         const html = await response.text();
         headerContainer.innerHTML = html;
       } catch (error) {
@@ -19,7 +25,8 @@ async function loadHeader() {
     const footerContainer = document.getElementById("footer");
     if (footerContainer) {
       try {
-        const response = await fetch("./components/footer.html");
+        const basePath = getBasePath(); // Ermitteln des richtigen Pfads
+        const response = await fetch(`${basePath}header.html`);
         const html = await response.text();
         footerContainer.innerHTML = html;
       } catch (error) {
