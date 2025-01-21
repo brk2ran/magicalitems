@@ -107,20 +107,31 @@ app.get("/items", async (req, res) => {
 });
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
-app.post("/items", upload.single("image"), validateItem, async (req, res) => {
-  const { name, price, mana, description, category_id } = req.body;
-  const image = req.file ? `/uploads/${req.file.filename}` : null;
+app.post("/items", async (req, res) => {
+  console.log("POST /items aufgerufen");
+  console.log("Request body:", req.body);
+
+  const { name, price, mana, description, category_id, image } = req.body;
+
+  // Setze einen Standardwert für image, wenn keiner angegeben ist
+  const imagePath = image || "/uploads/placeholder.jpg";
+  console.log("Finaler Image-Wert:", imagePath);
 
   try {
-    const result = await pool.query(
-      "INSERT INTO items (name, price, mana, image, description, category_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [name, price, mana, image, description, category_id]
-    );
+    const query = `
+      INSERT INTO items (name, price, mana, image, description, category_id)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const values = [name, price, mana, imagePath, description, category_id];
+
+    const result = await pool.query(query, values);
+    console.log("Neues Item erstellt:", result.rows[0]);
     res.status(201).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    console.error("Fehler in POST /items:", error.message);
+    res.status(500).json({ error: error.message });
   }
 });
+
 
 // 8.3 Ein Item abrufen
 app.get("/items/:id", async (req, res) => {
@@ -141,6 +152,8 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
+  console.log(`PUT /items/${id} aufgerufen`);
+  console.log("Daten für PUT /items:", { name, price, mana, description, category_id, image });
 
   try {
     const result = await pool.query(
@@ -148,10 +161,13 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
       [name, price, mana, image, description, category_id, id]
     );
     if (result.rows.length === 0) {
+      console.log(`Item mit ID ${id} nicht gefunden.`);
       return res.status(404).json({ error: "Item nicht gefunden" });
     }
+    console.log("Item aktualisiert:", result.rows[0]);
     res.status(200).json(result.rows[0]);
   } catch (err) {
+    console.error("Fehler in PUT /items/${id}:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -159,13 +175,17 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
 // 8.5 Ein Item löschen
 app.delete("/items/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(`DELETE /items/${id} aufgerufen`);
   try {
     const result = await pool.query("DELETE FROM items WHERE id = $1 RETURNING *", [id]);
     if (result.rows.length === 0) {
+      console.log(`Item mit ID ${id} nicht gefunden.`);
       return res.status(404).json({ error: "Item nicht gefunden" });
     }
+    console.log("Item gelöscht:", result.rows[0]);
     res.status(200).json({ message: "Item erfolgreich gelöscht", item: result.rows[0] });
   } catch (err) {
+    console.error("Fehler in DELETE /items/${id}:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -174,79 +194,99 @@ app.delete("/items/:id", async (req, res) => {
 
 // 8.6 Alle Kategorien abrufen
 app.get("/categories", async (req, res) => {
-    try {
-      const result = await pool.query("SELECT * FROM categories");
-      res.status(200).json(result.rows);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+  console.log("GET /categories aufgerufen");
+  try {
+    const result = await pool.query("SELECT * FROM categories");
+    console.log("Datenbankantwort für /categories:", result.rows);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Fehler in GET /categories:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
   
-  // 8.7 Eine neue Kategorie erstellen
-  app.post("/categories", async (req, res) => {
-    const { name } = req.body;
-    try {
-      const result = await pool.query(
-        "INSERT INTO categories (name) VALUES ($1) RETURNING *",
-        [name]
-      );
-      res.status(201).json(result.rows[0]);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+// 8.7 Eine neue Kategorie erstellen
+app.post("/categories", async (req, res) => {
+  console.log("POST /categories aufgerufen");
+  console.log("Daten für POST /categories:", req.body);
+  const { name } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO categories (name) VALUES ($1) RETURNING *",
+      [name]
+    );
+    console.log("Neue Kategorie erstellt:", result.rows[0]);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Fehler in POST /categories:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
   
-  // 8.8 Eine Kategorie aktualisieren
-  app.put("/categories/:id", async (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
-    try {
-      const result = await pool.query(
-        "UPDATE categories SET name = $1 WHERE id = $2 RETURNING *",
-        [name, id]
-      );
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: "Kategorie nicht gefunden" });
-      }
-      res.status(200).json(result.rows[0]);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+// 8.8 Eine Kategorie aktualisieren
+app.put("/categories/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  console.log(`PUT /categories/${id} aufgerufen`);
+  console.log("Daten für PUT /categories:", { id, name });
+  try {
+    const result = await pool.query(
+      "UPDATE categories SET name = $1 WHERE id = $2 RETURNING *",
+      [name, id]
+    );
+    if (result.rows.length === 0) {
+      console.log(`Kategorie mit ID ${id} nicht gefunden.`);
+      return res.status(404).json({ error: "Kategorie nicht gefunden" });
     }
-  });
+    console.log("Kategorie aktualisiert:", result.rows[0]);
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error("Fehler in PUT /categories/${id}:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
   
-  // 8.9 Eine Kategorie löschen
-  app.delete("/categories/:id", async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await pool.query(
-        "DELETE FROM categories WHERE id = $1 RETURNING *",
-        [id]
-      );
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: "Kategorie nicht gefunden" });
-      }
-      res.status(200).json({ message: "Kategorie gelöscht", category: result.rows[0] });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+// 8.9 Eine Kategorie löschen
+app.delete("/categories/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(`DELETE /categories/${id} aufgerufen`);
+  try {
+    const result = await pool.query(
+      "DELETE FROM categories WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rows.length === 0) {
+      console.log(`Kategorie mit ID ${id} nicht gefunden.`);
+      return res.status(404).json({ error: "Kategorie nicht gefunden" });
     }
-  });
+    console.log("Kategorie gelöscht:", result.rows[0]);
+    res.status(200).json({ message: "Kategorie gelöscht", category: result.rows[0] });
+  } catch (err) {
+    console.error("Fehler in DELETE /categories/${id}:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
-  // 8.10 Items einer Kategorie abrufen
-  app.get("/categories/:id/items", async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await pool.query(
-        "SELECT * FROM items WHERE category_id = $1",
-        [id]
-      );
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: "Keine Items in dieser Kategorie gefunden" });
-      }
-      res.status(200).json(result.rows);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+// 8.10 Items einer Kategorie abrufen
+app.get("/categories/:id/items", async (req, res) => {
+  const { id } = req.params;
+  console.log(`GET /categories/${id}/items aufgerufen`);
+  try {
+    const result = await pool.query(
+      "SELECT * FROM items WHERE category_id = $1",
+      [id]
+    );
+    if (result.rows.length === 0) {
+      console.log(`Keine Items für Kategorie ID ${id} gefunden.`);
+      return res.status(404).json({ error: "Keine Items in dieser Kategorie gefunden" });
     }
-  });
+    console.log("Gefundene Items:", result.rows);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Fehler in GET /categories/${id}/items:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
   
   
 
