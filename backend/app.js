@@ -31,13 +31,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
+const isProduction = process.env.NODE_ENV === "production";
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Für Neon erforderlich
-  },
+  ssl: isProduction
+    ? { rejectUnauthorized: false } // SSL für Neon in Produktion
+    : false, // Kein SSL für lokale Datenbank
 });
-
 // 5. Test der Datenbankverbindung
 pool.connect((err) => {
   if (err) {
