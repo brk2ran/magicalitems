@@ -1,3 +1,6 @@
+
+
+
 // 1. Abhängigkeiten laden
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -11,6 +14,8 @@ const { Pool } = require("pg");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// CORS-Konfiguration
 const corsOptions = {
   origin: "https://magicalitems.netlify.app", // Erlaube nur deine Frontend-Domain
   methods: "GET,POST,PUT,DELETE", // Erlaube spezifische HTTP-Methoden
@@ -25,21 +30,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// 4. PostgreSQL-Pool einrichten
+// 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Für Neon erforderlich
+  },
 });
 
 // 5. Test der Datenbankverbindung
 pool.connect((err) => {
   if (err) {
-    console.error("Datenbankverbindung fehlgeschlagen:", err);
+    console.error("Datenbankverbindung fehlgeschlagen:", err.message);
   } else {
-    console.log("Mit der Datenbank verbunden.");
+    console.log("Erfolgreich mit der Datenbank verbunden.");
   }
 });
 
