@@ -1,36 +1,15 @@
 const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
 
-// Funktion zum Laden der Kategorien
-async function loadCategories() {
-    const categorySelect = document.getElementById("category");
-
-    try {
-        const response = await fetch(`${BASE_BACKEND_URL}/categories`);
-        if (!response.ok) throw new Error(`Fehler: ${response.statusText}`);
-
-        const categories = await response.json();
-
-        // Kategorien als Optionen hinzufügen
-        categorySelect.innerHTML = categories
-            .map(category => `<option value="${category.id}">${category.name}</option>`)
-            .join("");
-    } catch (error) {
-        console.error("Fehler beim Laden der Kategorien:", error);
-        categorySelect.innerHTML = `<option value="">Kategorien konnten nicht geladen werden</option>`;
-    }
-}
-
-// Funktion zum Absenden des Formulars
 async function handleFormSubmit(event) {
     event.preventDefault();
   
     const form = event.target;
-    const formData = new FormData(form);
+    const formData = new FormData(form); // FormData enthält alle Form-Daten inkl. Dateien
   
     try {
-      const response = await fetch(`${BASE_BACKEND_URL}/items`, {
+      const response = await fetch(`https://magicalitems.onrender.com/items`, {
         method: "POST",
-        body: formData, // Sende die FormData direkt
+        body: formData, // Sende die FormData direkt an das Backend
       });
   
       if (!response.ok) {
@@ -40,17 +19,18 @@ async function handleFormSubmit(event) {
       const item = await response.json();
       console.log("Erfolgreich erstellt:", item);
       alert("Item erfolgreich erstellt!");
-      window.location.href = "../index.html";
+      window.location.href = "/index.html"; // Weiterleitung nach dem Erstellen
     } catch (error) {
-      console.error(error);
+      console.error("Fehler beim Erstellen des Items:", error);
       alert("Fehler beim Erstellen des Items. Bitte versuchen Sie es erneut.");
     }
   }
   
-
-// Event-Listener hinzufügen
-document.addEventListener("DOMContentLoaded", () => {
-    loadCategories(); // Kategorien laden
-    const form = document.getElementById("item-form");
+  // Event-Listener für das Formular
+  const form = document.querySelector("form");
+  if (form) {
     form.addEventListener("submit", handleFormSubmit);
-});
+  } else {
+    console.error("Formular nicht gefunden");
+  }
+  
