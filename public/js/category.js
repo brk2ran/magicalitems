@@ -2,7 +2,7 @@ import { fetchData, deleteItem } from "./api.js";
 
 // Funktion zum Laden der Items einer Kategorie
 async function loadCategoryItems(categoryId) {
-  const itemsList = document.getElementById("items-list");
+  const itemsList = document.querySelector(".items-list");
   const itemCount = document.getElementById("item-count");
 
   try {
@@ -14,15 +14,17 @@ async function loadCategoryItems(categoryId) {
     itemsList.innerHTML = items
       .map(
         (item) => `
-        <li>
+        <div class="item-container">
           <h2>${item.name}</h2>
           <p>Preis: ${item.price}</p>
           <p>Mana: ${item.mana}</p>
           <p>${item.description}</p>
           <img src="${item.image}" alt="${item.name}" />
-          <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
-          <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
-        </li>
+          <div class="item-actions">
+            <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
+            <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
+          </div>
+        </div>
       `
       )
       .join("");
