@@ -1,119 +1,4 @@
-/* --- Globale Einstellungen --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 16px;
-    line-height: 1.6;
-    background-color: #f9f9f9;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-}
-
-/* --- Header und Footer --- */
-header, footer {
-    background-color: #333;
-    color: white;
-    padding: 0.5rem 1rem;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header .logo h1 {
-    font-size: 30px;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 5px;
-}
-
-header nav ul li a, #add-item-btn {
-    font-family: 'Cinzel Decorative', serif;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    transition: background-color 0.3s;
-}
-
-header nav ul li a.active {
-    background-color: #4a4a4a; /* Beispiel: Gelber Hintergrund */
-    color: #ffffff; /* Dunklere Schriftfarbe */
-}
-
-
-.details-btn{
-    background-color: #333;
-    border-radius: 1px;
-    padding: 5px 10px;
-    font-size: 16px;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s;
-}
-
-header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
-    background-color: #333;
-}
-
-.back-button {
-    margin-top: 20px; /* Abstand zur Karte */
-    text-align: center; /* Button zentrieren */
-}
-
-.back-button a {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #333;
-    text-decoration: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-}
-
-.back-button a:hover {
-    background-color: #555;
-}
-
-
-footer {
-    text-align: center;
-    font-size: 14px;
-    margin-top: auto;
-}
-
-/* --- Hauptbereich --- */
-main {
-    padding: 20px;
-    flex: 1;
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-size: 28px;
-}
-
-/* --- Grid-Layout für Items --- */
+/* Globale Layout für Items */
 .items-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -121,7 +6,7 @@ h2 {
     margin-top: 2rem;
 }
 
-.item-card, .detail-container .item-card, .search-result-card {
+.item-card {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -131,11 +16,11 @@ h2 {
     transition: transform 0.3s ease;
 }
 
-.item-card:hover, .detail-container .item-card:hover, .search-result-card:hover {
+.item-card:hover {
     transform: translateY(-5px);
 }
 
-.item-card img, .detail-container .item-card img, .search-result-card img {
+.item-card img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
@@ -143,69 +28,45 @@ h2 {
     object-fit: cover;
 }
 
-.search-bar {
-    background-color: transparent;
-    border: none;
-    display: flex; /* Horizontale Anordnung */
-    gap: 5px; /* Abstand zwischen den Elementen */
-    align-items: center; /* Vertikale Ausrichtung */
-    justify-content: flex-end; /* Rechtsbündige Ausrichtung */
+.item-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.search-bar input {
-    width: 120px; /* Kleinere Breite */
-    font-size: 16px;
+.item-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
 }
 
-.search-bar button {
-    padding: 5px 10px; /* Kompaktere Buttons */
-    font-size: 16px;
-}
-
-#add-item-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-}
-
-/* --- Detailseite --- */
-/* Container für die Detailansicht */
-.detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    padding: 2px;
-    max-width: 400px;
-    text-align: center;
-}
-
-/* Bild-Einstellungen */
-.detail-container img {
-    max-width: 100%;
-    height: auto;
+.details-btn {
     display: block;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
 }
 
-/* Text unter dem Bild */
-.detail-container h3,
-.detail-container p {
-    margin: 10px 0;
+.details-btn:hover {
+    background-color: #23272b;
 }
+
+/* Bearbeiten- und Löschen-Buttons */
 .action-buttons {
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Abstand zwischen Buttons */
-    margin-top: 10px; /* Abstand zum oberen Inhalt */
+    justify-content: space-around;
+    margin-top: 1rem;
 }
 
 .edit-btn, .delete-btn {
-    font-family: 'Cinzel Decorative', serif;    padding: 10px 15px;
+    font-family: 'Cinzel Decorative', serif;
+    padding: 8px 12px;
     border: none;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 0.9rem;
     cursor: pointer;
     text-align: center;
 }
@@ -227,255 +88,3 @@ h2 {
 .delete-btn:hover {
     background-color: #c82333;
 }
-
-.details-btn {
-    display: block;
-    margin: 0 auto; /* Zentrieren des Details-Buttons */
-    text-align: center;
-    background-color: #343a40;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 4px;
-    text-decoration: none;
-}
-
-.details-btn:hover {
-    background-color: #23272b;
-}
-
-/* Anpassung für die .form-row */
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px; /* Abstand zwischen den Eingabefeldern */
-    margin-bottom: 20px;
-}
-
-.form-row .form-group {
-    flex: 1; /* Felder gleichmäßig verteilen */
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
-}
-
-button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-family: 'Cinzel Decorative', cursive;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-/* Zusätzliche Stile */
-label {
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-input, select, textarea {
-    font-size: 1rem;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-
-
-/* Kontaktformular */
-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-textarea {
-    resize: vertical; /* Benutzer kann die Höhe des Textfeldes ändern */
-}
-
-button {
-    font-family: 'Cinzel Decorative', serif;
-    display: block;
-    width: 100%;
-    padding: 0.7rem;
-    background-color: #4a4a4a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #333;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-    margin: 1rem 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Impressum-Seite */
-.impressum-content {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.impressum-content p {
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.impressum-content strong {
-    font-weight: bold;
-    color: #000;
-}
-
-
-/* --- Responsives Design --- */
-
-/* Allgemeine Tablet-Ansicht (maximal 768px) */
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 14px; /* Kleinere Schriftgröße */
-    }
-
-    header {
-        flex-direction: column; /* Elemente vertikal ausrichten */
-        align-items: center; /* Links ausrichten */
-    }
-
-    header .logo h1 {
-        font-size: 24px; /* Kleinere Schriftgröße für Logo */
-        margin-bottom: 10px;
-    }
-
-    header nav ul {
-        flex-wrap: wrap; /* Tabs umbrechen, wenn nötig */
-        gap: 10px; /* Mehr Abstand für Tablets */
-        justify-content: center; /* Zentrierte Tabs */
-    }
-
-    header nav ul li a, #add-item-btn {
-        font-size: 14px; /* Kleinere Tabs */
-        padding: 0.4rem 0.8rem;
-    }
-
-    .search-bar {
-        flex-direction: column; /* Suchleiste und Button untereinander */
-        align-items: stretch; /* Volle Breite nutzen */
-        gap: 10px; /* Vertikaler Abstand */
-    }
-
-    .search-bar input {
-        width: 100%; /* Input passt sich der Breite an */
-    }
-
-    .search-bar button {
-        width: 100%; /* Button passt sich der Breite an */
-    }
-
-    .items-list {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Kleinere Spaltenbreite */
-        gap: 1rem; /* Weniger Abstand */
-    }
-
-    .item-card img {
-        height: 150px; /* Kleinere Bilder */
-    }
-}
-
-/* Smartphone-Ansicht (maximal 480px) */
-@media screen and (max-width: 480px) {
-    header {
-        padding: 0.5rem; /* Weniger Innenabstand */
-    }
-
-    header .logo h1 {
-        font-size: 18px; /* Noch kleinere Schriftgröße */
-    }
-
-    header nav ul {
-        flex-direction: column; /* Tabs untereinander */
-        gap: 5px; /* Weniger Abstand */
-    }
-
-    .search-bar {
-        gap: 5px; /* Weniger Abstand */
-    }
-
-    .search-bar input, .search-bar button {
-        font-size: 14px; /* Kleinere Schrift */
-        padding: 0.3rem 0.6rem;
-    }
-
-    .items-list {
-        grid-template-columns: 1fr; /* Nur eine Spalte */
-        gap: 0.5rem; /* Weniger Abstand */
-    }
-
-    .item-card {
-        padding: 0.8rem; /* Weniger Innenabstand */
-    }
-
-    .item-card img {
-        height: 120px; /* Noch kleinere Bilder */
-    }
-
-    .back-button a {
-        padding: 8px 12px; /* Kompaktere Buttons */
-        font-size: 14px;
-    }
-
-    footer {
-        font-size: 12px; /* Kleinere Schrift im Footer */
-    }
-}
-
