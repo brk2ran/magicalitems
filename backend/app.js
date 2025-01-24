@@ -2,12 +2,13 @@
 
 
 // 1. Abhängigkeiten laden
-const express = require("express"); // const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
+const express = require("express");
 const multer = require("multer");
+const bodyParser = require("body-parser"); // Optional, falls benötigt
+const cors = require("cors");
 const path = require("path");
 const { Pool } = require("pg");
+const dotenv = require("dotenv");
 
 // 2. Initialisiere App und lade Umgebungsvariablen
 dotenv.config();
@@ -22,9 +23,11 @@ const corsOptions = {
 };
 
 // 3. Middleware
-app.use(cors(corsOptions));
-app.use(express.json());  // bodyParser mit express ersetzt
-app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions)); // CORS aktivieren
+app.use(express.json()); // Wichtig für JSON-Parsing
+app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL-encoded-Daten
+app.use(express.static(path.join(__dirname, "uploads"))); // Statische Dateien aus "uploads" bereitstellen
+
 
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -38,6 +41,7 @@ const pool = new Pool({
     ? { rejectUnauthorized: false } // SSL für Neon in Produktion
     : false, // Kein SSL für lokale Datenbank
 });
+
 // 5. Test der Datenbankverbindung
 pool.connect((err) => {
   if (err) {
@@ -48,7 +52,8 @@ pool.connect((err) => {
 });
 
 // 6. Multer-Konfiguration für Datei-Uploads
-const storage = multer.diskStorage({
+
+/*const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/"); // Speichere Bilder im Ordner 'uploads'
   },
@@ -57,7 +62,24 @@ const storage = multer.diskStorage({
     cb(null, `${uniqueSuffix}-${file.originalname}`);
   },
 });
+const upload = multer({ storage });*/
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, "uploads");
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + file.originalname;
+    cb(null, uniqueSuffix);
+  },
+});
 const upload = multer({ storage });
+
+// Debug-Logs für Middleware
+console.log("Middleware initialized:");
+console.log("express.json() enabled");
+console.log("Multer storage destination:", path.join(__dirname, "uploads"));
 
 // 7. Validierungsfunktionen
 
@@ -107,7 +129,8 @@ app.get("/items", async (req, res) => {
 });
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
-app.post("/items", upload.single("image"), async (req, res) => {
+
+/*app.post("/items", upload.single("image"), async (req, res) => {
   console.log("POST /items aufgerufen");
   console.log("Request body:", req.body); // Request-Body loggen
   console.log("Uploaded file:", req.file); // Datei-Upload loggen
@@ -129,6 +152,34 @@ app.post("/items", upload.single("image"), async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Fehler in POST /items:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});*/
+
+app.post("/items", upload.single("image"), async (req, res) => {
+  try {
+    console.log("POST /items aufgerufen");
+    console.log("Request body:", req.body);
+    console.log("Uploaded file:", req.file);
+
+    const { name, price, mana, description, category_id } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.jpg";
+
+    if (!name || !price || !mana || !description || !category_id) {
+      console.error("Fehlende Felder:", { name, price, mana, description, category_id });
+      return res.status(400).json({ error: "Alle Felder sind erforderlich" });
+    }
+
+    const query = `
+      INSERT INTO items (name, price, mana, image, description, category_id)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const values = [name, price, mana, image, description, category_id];
+
+    const result = await pool.query(query, values);
+    console.log("Item erstellt:", result.rows[0]);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Fehler beim Erstellen des Items:", error.message);
     res.status(500).json({ error: error.message });
   }
 });

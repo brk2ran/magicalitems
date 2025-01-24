@@ -3,6 +3,7 @@ document.getElementById("create-item-form").addEventListener("submit", async (ev
 
   const form = event.target;
   const formData = new FormData(form); // Sammle alle Formulareingaben und Dateien
+  await createItem(formData);
 
   try {
     const response = await fetch("https://magicalitems.onrender.com/items", {
