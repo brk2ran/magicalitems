@@ -73,21 +73,22 @@ function validateItem(req, res, next) {
   if (typeof name !== "string" || name.trim().length === 0) {
     return res.status(400).json({ error: "Name muss ein gültiger String sein" });
   }
-  if (typeof price !== "number" || price <= 0) {
+  if (isNaN(price) || Number(price) <= 0) {
     return res.status(400).json({ error: "Preis muss eine positive Zahl sein" });
   }
-  if (typeof mana !== "number" || mana < 0) {
+  if (isNaN(mana) || Number(mana) < 0) {
     return res.status(400).json({ error: "Mana muss eine positive Ganzzahl sein" });
   }
   if (typeof description !== "string" || description.trim().length === 0) {
     return res.status(400).json({ error: "Beschreibung darf nicht leer sein" });
   }
-  if (typeof category_id !== "number" || category_id <= 0) {
+  if (isNaN(category_id) || Number(category_id) <= 0) {
     return res.status(400).json({ error: "Category ID muss eine gültige Zahl sein" });
   }
 
   next();
 }
+
 
 // 8. Routen
 
@@ -107,15 +108,15 @@ app.get("/items", async (req, res) => {
 });
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
-app.post("/items", async (req, res) => {
+app.post("/items", upload.single("image"), async (req, res) => {
   console.log("POST /items aufgerufen");
   console.log("Request body:", req.body); // Request-Body loggen
   console.log("Uploaded file:", req.file); // Datei-Upload loggen
 
-  const { name, price, mana, description, category_id, image } = req.body;
+  // Werte aus req.body und req.file extrahieren
+  const { name, price, mana, description, category_id } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.jpg";
 
-  // Setze einen Standardwert für image, wenn keiner angegeben ist
-  const imagePath = image || "/uploads/placeholder.jpg";
   console.log("Finaler Image-Wert:", imagePath);
 
   try {
@@ -132,6 +133,7 @@ app.post("/items", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 
 // 8.3 Ein Item abrufen

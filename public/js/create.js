@@ -23,34 +23,30 @@ async function loadCategories() {
 // Funktion zum Absenden des Formulars
 async function handleFormSubmit(event) {
     event.preventDefault();
-
+  
     const form = event.target;
     const formData = new FormData(form);
-
-    // Füge diesen Log hinzu, um den Inhalt von FormData zu überprüfen
-    console.log("FormData Inhalt:");
-    formData.forEach((value, key) => {
-        console.log(key, value);
-    });
-
+  
     try {
-        const response = await fetch(`${BASE_BACKEND_URL}/items`, {
-            method: "POST",
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error(`Fehler beim Erstellen des Items: ${response.statusText}`);
-        }
-
-        const item = await response.json();
-        alert("Item erfolgreich erstellt!");
-        window.location.href = "../index.html"; // Weiterleitung zur Startseite
+      const response = await fetch(`${BASE_BACKEND_URL}/items`, {
+        method: "POST",
+        body: formData, // Sende die FormData direkt
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Fehler beim Erstellen des Items: ${response.statusText}`);
+      }
+  
+      const item = await response.json();
+      console.log("Erfolgreich erstellt:", item);
+      alert("Item erfolgreich erstellt!");
+      window.location.href = "../index.html";
     } catch (error) {
-        console.error(error);
-        alert("Fehler beim Erstellen des Items. Bitte versuchen Sie es erneut.");
+      console.error(error);
+      alert("Fehler beim Erstellen des Items. Bitte versuchen Sie es erneut.");
     }
-}
+  }
+  
 
 // Event-Listener hinzufügen
 document.addEventListener("DOMContentLoaded", () => {
