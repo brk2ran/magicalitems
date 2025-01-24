@@ -1,58 +1,127 @@
-/* Reset */
+/* --- Globale Einstellungen --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Globale Einstellungen */
 body {
     font-family: 'Cinzel Decorative', serif;
     font-size: 16px;
-    line-height: 1.5;
-    color: #1f2328;
+    line-height: 1.6;
     background-color: #f9f9f9;
-    margin: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-header, footer {
-    background-color: #343a40;
-    color: white;
+h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    padding: 1rem 0;
 }
 
-/* Navigation */
-nav {
+/* --- Header und Footer --- */
+header, footer {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
-    background-color: #23272b;
 }
 
-nav a {
+header .logo h1 {
+    font-size: 30px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+}
+
+header nav ul li a, #add-item-btn {
+    font-family: 'Cinzel Decorative', serif;
     text-decoration: none;
     color: white;
-    margin: 0 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    transition: background-color 0.3s;
+}
+
+header nav ul li a.active {
+    background-color: #4a4a4a; /* Beispiel: Gelber Hintergrund */
+    color: #ffffff; /* Dunklere Schriftfarbe */
+}
+
+
+.details-btn{
+    background-color: #333;
+    border-radius: 1px;
+    padding: 5px 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
+    background-color: #333;
+}
+
+.back-button {
+    margin-top: 20px; /* Abstand zur Karte */
+    text-align: center; /* Button zentrieren */
+}
+
+.back-button a {
+    display: inline-block;
+    padding: 10px 20px;
     font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
 }
 
-nav a:hover {
-    color: #ffc107;
+.back-button a:hover {
+    background-color: #555;
 }
 
-/* Globale Layout für Items */
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* --- Hauptbereich --- */
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* --- Grid-Layout für Items --- */
 .items-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin: 2rem;
-    padding: 0;
-    list-style: none;
+    margin-top: 2rem;
 }
 
-.item-card {
+.item-card, .detail-container .item-card, .search-result-card {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -62,11 +131,11 @@ nav a:hover {
     transition: transform 0.3s ease;
 }
 
-.item-card:hover {
+.item-card:hover, .detail-container .item-card:hover, .search-result-card:hover {
     transform: translateY(-5px);
 }
 
-.item-card img {
+.item-card img, .detail-container .item-card img, .search-result-card img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
@@ -74,45 +143,69 @@ nav a:hover {
     object-fit: cover;
 }
 
-.item-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+.search-bar {
+    background-color: transparent;
+    border: none;
+    display: flex; /* Horizontale Anordnung */
+    gap: 5px; /* Abstand zwischen den Elementen */
+    align-items: center; /* Vertikale Ausrichtung */
+    justify-content: flex-end; /* Rechtsbündige Ausrichtung */
 }
 
-.item-card p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 1rem;
+.search-bar input {
+    width: 120px; /* Kleinere Breite */
+    font-size: 16px;
 }
 
-.details-btn {
-    display: block;
+.search-bar button {
+    padding: 5px 10px; /* Kompaktere Buttons */
+    font-size: 16px;
+}
+
+#add-item-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+}
+
+/* --- Detailseite --- */
+/* Container für die Detailansicht */
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
+    padding: 2px;
+    max-width: 400px;
     text-align: center;
-    background-color: #343a40;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 4px;
-    text-decoration: none;
 }
 
-.details-btn:hover {
-    background-color: #23272b;
+/* Bild-Einstellungen */
+.detail-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-/* Bearbeiten- und Löschen-Buttons */
+/* Text unter dem Bild */
+.detail-container h3,
+.detail-container p {
+    margin: 10px 0;
+}
 .action-buttons {
     display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
+    justify-content: center;
+    gap: 10px; /* Abstand zwischen Buttons */
+    margin-top: 10px; /* Abstand zum oberen Inhalt */
 }
 
 .edit-btn, .delete-btn {
-    font-family: 'Cinzel Decorative', serif;
-    padding: 8px 12px;
+    font-family: 'Cinzel Decorative', serif;    padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 14px;
     cursor: pointer;
     text-align: center;
 }
@@ -135,26 +228,71 @@ nav a:hover {
     background-color: #c82333;
 }
 
-/* Kategorienübersicht */
-.category-header {
+.details-btn {
+    display: block;
+    margin: 0 auto; /* Zentrieren des Details-Buttons */
     text-align: center;
-    margin: 2rem 0;
-    font-size: 2rem;
-    color: #343a40;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
 }
 
-.category-info {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 2rem;
+.details-btn:hover {
+    background-color: #23272b;
 }
 
-/* Footer */
-footer p {
-    margin: 0;
-    font-size: 0.9rem;
+/* Anpassung für die .form-row */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Abstand zwischen den Eingabefeldern */
+    margin-bottom: 20px;
 }
+
+.form-row .form-group {
+    flex: 1; /* Felder gleichmäßig verteilen */
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Zusätzliche Stile */
+label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+input, select, textarea {
+    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
 
 /* Kontaktformular */
 form {
@@ -239,6 +377,7 @@ button:hover {
     font-weight: bold;
     color: #000;
 }
+
 
 /* --- Responsives Design --- */
 
