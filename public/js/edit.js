@@ -42,7 +42,7 @@ form.addEventListener("submit", async (event) => {
         // Sende die aktualisierten Daten ans Backend
         await updateItem(`${itemId}`, formData);
         alert("Item erfolgreich aktualisiert!");
-        window.location.href = "./index.html";
+        window.location.href = "/index.html";
     } catch (error) {
         console.error("Fehler beim Aktualisieren des Items:", error);
         alert("Fehler beim Aktualisieren des Items.");
