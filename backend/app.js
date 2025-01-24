@@ -24,8 +24,8 @@ const corsOptions = {
 
 // 3. Middleware
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());  // bodyParser mit express ersetzt
+app.use(express.urlencoded({ extended: true }));
 
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -109,7 +109,8 @@ app.get("/items", async (req, res) => {
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 app.post("/items", async (req, res) => {
   console.log("POST /items aufgerufen");
-  console.log("Request body:", req.body);
+  console.log("Request body:", req.body); // Request-Body loggen
+  console.log("Uploaded file:", req.file); // Datei-Upload loggen
 
   const { name, price, mana, description, category_id, image } = req.body;
 
