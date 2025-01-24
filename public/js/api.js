@@ -1,7 +1,7 @@
 const API_BASE_URL = "https://magicalitems.onrender.com"; // Backend-Basis-URL
 
 // Helper-Funktion: Fetch-Daten von der API abrufen
-async function fetchData(endpoint, options = {}) {
+export async function fetchData(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
     if (!response.ok) {
