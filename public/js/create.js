@@ -1,21 +1,15 @@
+import { createItem } from "./api.js";
+
 document.getElementById("create-item-form").addEventListener("submit", async (event) => {
   event.preventDefault(); // Verhindere das automatische Neuladen der Seite
 
   const form = event.target;
   const formData = new FormData(form); // Sammle alle Formulareingaben und Dateien
-  await createItem(formData);
 
   try {
-    const response = await fetch("https://magicalitems.onrender.com/items", {
-      method: "POST",
-      body: formData, // FormData wird direkt gesendet
-    });
+    // Verwende die createItem-Funktion aus api.js
+    const data = await createItem(formData);
 
-    if (!response.ok) {
-      throw new Error(`Fehler beim Erstellen des Items: ${response.statusText}`);
-    }
-
-    const data = await response.json();
     alert("Item erfolgreich erstellt!");
     console.log("Erstelltes Item:", data);
 
