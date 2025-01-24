@@ -34,15 +34,6 @@ export async function getItemDetails(itemId) {
   return fetchData(`/items/${itemId}`);
 }
 
-/*// Neues Item erstellen
-export async function createItem(itemData) {
-  return fetchData("/items", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(itemData),
-  });
-}*/
-
 // Neues Item erstellen
 export async function createItem(itemData) {
   const isFormData = itemData instanceof FormData; // Prüfen, ob FormData verwendet wird
@@ -54,13 +45,14 @@ export async function createItem(itemData) {
   });
 }
 
-
 // Item aktualisieren
 export async function updateItem(itemId, itemData) {
+  const isFormData = itemData instanceof FormData; // Prüfen, ob FormData verwendet wird
+
   return fetchData(`/items/${itemId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(itemData),
+    headers: isFormData ? undefined : { "Content-Type": "application/json" },
+    body: isFormData ? itemData : JSON.stringify(itemData),
   });
 }
 
