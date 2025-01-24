@@ -1,4 +1,4 @@
-import { fetchData, updateData } from './api.js';
+import { fetchData, updateItem } from './api.js';
 
 const form = document.querySelector("#edit-form");
 
@@ -40,7 +40,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // Sende die aktualisierten Daten ans Backend
-        await updateData(`/items/${itemId}`, formData);
+        await updateItem(`/items/${itemId}`, formData);
         alert("Item erfolgreich aktualisiert!");
         window.location.href = "index.html";
     } catch (error) {
