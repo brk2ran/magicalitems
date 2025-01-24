@@ -1,11 +1,8 @@
-// const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
-
-// Funktion zum Verarbeiten des Formulars
 document.getElementById("create-item-form").addEventListener("submit", async (event) => {
   event.preventDefault(); // Verhindere das automatische Neuladen der Seite
 
   const form = event.target;
-  const formData = new FormData(form); // Alle Formulareingaben und Dateien sammeln
+  const formData = new FormData(form); // Sammle alle Formulareingaben und Dateien
 
   try {
     const response = await fetch("https://magicalitems.onrender.com/items", {
@@ -21,21 +18,11 @@ document.getElementById("create-item-form").addEventListener("submit", async (ev
     alert("Item erfolgreich erstellt!");
     console.log("Erstelltes Item:", data);
 
-    // Weiterleitung oder Reset des Formulars
+    // Zurücksetzen des Formulars nach erfolgreicher Erstellung
     form.reset();
-    window.location.href = "/index.html";
+    window.location.href = "/index.html"; // Weiterleitung zur Startseite
   } catch (error) {
-    console.error("Fehler:", error);
+    console.error("Fehler beim Erstellen des Items:", error);
     alert("Fehler beim Erstellen des Items. Bitte versuchen Sie es erneut.");
   }
 });
-
-  // Event-Listener für das Formular
-  const form = document.querySelector("form");
-  if (form) {
-    form.addEventListener("submit", handleFormSubmit);
-  } else {
-    console.error("Formular nicht gefunden");
-  }
-  
-  
