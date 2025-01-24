@@ -53,7 +53,8 @@ pool.connect((err) => {
 
 // 6. Multer-Konfiguration für Datei-Uploads
 
-/*const storage = multer.diskStorage({
+/*
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/"); // Speichere Bilder im Ordner 'uploads'
   },
@@ -63,7 +64,7 @@ pool.connect((err) => {
   },
 });
 const upload = multer({ storage });*/
-
+/*
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, "uploads");
@@ -74,7 +75,23 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix);
   },
 });
+const upload = multer({ storage });*/
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, 'uploads');
+    cb(null, uploadPath); // Zielordner für hochgeladene Dateien
+    console.log("Upload-Pfad:", uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueSuffix); // Einzigartiger Dateiname
+    console.log("Generierter Dateiname:", uniqueSuffix);
+  },
+});
+
 const upload = multer({ storage });
+
 
 // Debug-Logs für Middleware
 console.log("Middleware initialized:");
@@ -118,7 +135,8 @@ app.get("/", (req, res) => {
   res.send("Backend läuft!");
 });
 
-/*// 8.1 Alle Items abrufen
+/*
+// 8.1 Alle Items abrufen
 app.get("/items", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM items");
@@ -152,7 +170,8 @@ app.get("/items", async (req, res) => {
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 
-/*app.post("/items", upload.single("image"), async (req, res) => {
+/*
+app.post("/items", upload.single("image"), async (req, res) => {
   console.log("POST /items aufgerufen");
   console.log("Request body:", req.body); // Request-Body loggen
   console.log("Uploaded file:", req.file); // Datei-Upload loggen
@@ -177,7 +196,7 @@ app.get("/items", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });*/
-
+/*
 app.post("/items", upload.single("image"), async (req, res) => {
   try {
     console.log("POST /items aufgerufen");
@@ -204,6 +223,25 @@ app.post("/items", upload.single("image"), async (req, res) => {
     console.error("Fehler beim Erstellen des Items:", error.message);
     res.status(500).json({ error: error.message });
   }
+});*/
+
+app.post('/items', upload.single('image'), validateItem, async (req, res) => {
+  const { name, price, mana, description, category_id } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
+  console.log("Bildpfad:", imagePath);
+
+  try {
+    const query = `
+      INSERT INTO items (name, price, mana, image, description, category_id)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const values = [name, price, mana, imagePath, description, category_id];
+
+    const result = await pool.query(query, values);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Fehler beim Erstellen eines Items:", err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 
@@ -223,7 +261,8 @@ app.get("/items/:id", async (req, res) => {
 });
 
 // 8.4 Ein Item aktualisieren
-/*app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => {
+/*
+app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => {
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
@@ -246,7 +285,7 @@ app.get("/items/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });*/
-
+/*
 app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => {
   const { id } = req.params; // Extrahiere die Item-ID aus der URL
   const { name, price, mana, description, category_id } = req.body; // Extrahiere die restlichen Felder aus dem Body
@@ -292,7 +331,41 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
     res.status(500).json({ error: "Interner Serverfehler" });
   }
 });
+*/
 
+app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => {
+  const { id } = req.params;
+  const { name, price, mana, description, category_id } = req.body;
+  const image = req.file ? `/uploads/${req.file.filename}` : null;
+
+  console.log(`PUT /items/${id} aufgerufen`);
+  console.log("Daten für PUT /items:", { name, price, mana, description, category_id, image });
+
+  try {
+    const query = `
+      UPDATE items SET 
+      name = $1, 
+      price = $2, 
+      mana = $3, 
+      image = COALESCE($4, image), 
+      description = $5, 
+      category_id = $6 
+      WHERE id = $7 RETURNING *`;
+    const values = [name, price, mana, image, description, category_id, id];
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      console.log(`Item mit ID ${id} nicht gefunden.`);
+      return res.status(404).json({ error: "Item nicht gefunden" });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error(`Fehler beim Aktualisieren des Items mit ID ${id}:`, err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 // 8.5 Ein Item löschen
