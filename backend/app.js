@@ -118,7 +118,7 @@ app.get("/", (req, res) => {
   res.send("Backend läuft!");
 });
 
-// 8.1 Alle Items abrufen
+/*// 8.1 Alle Items abrufen
 app.get("/items", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM items");
@@ -126,7 +126,29 @@ app.get("/items", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});*/
+
+// 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie)
+app.get("/items", async (req, res) => {
+  const { category_id } = req.query;
+
+  try {
+    let query = "SELECT * FROM items";
+    const values = [];
+
+    if (category_id) {
+      query += " WHERE category_id = $1";
+      values.push(category_id);
+    }
+
+    const result = await pool.query(query, values);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Fehler in GET /items:", err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
+
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 

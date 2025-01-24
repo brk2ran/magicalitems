@@ -1,5 +1,3 @@
-// public/js/api.js
-
 const API_BASE_URL = "https://magicalitems.onrender.com"; // Backend-Basis-URL
 
 // Helper-Funktion: Fetch-Daten von der API abrufen
