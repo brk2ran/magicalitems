@@ -40,7 +40,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // Sende die aktualisierten Daten ans Backend
-        await updateItem(`/items/${itemId}`, formData);
+        await updateItem(`${itemId}`, formData);
         alert("Item erfolgreich aktualisiert!");
         window.location.href = "index.html";
     } catch (error) {
