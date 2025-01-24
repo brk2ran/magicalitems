@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 3000;
 
 // CORS-Konfiguration
 const corsOptions = {
-  origin: "https://magicalitems.netlify.app", // Erlaube nur deine Frontend-Domain
-  methods: "GET,POST,PUT,DELETE", // Erlaube spezifische HTTP-Methoden
+  origin: ['https://magicalitems.netlify.app'], // Erlaube nur deine Frontend-Domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Erlaube spezifische HTTP-Methoden
   credentials: true, // Für Authentifizierung und Cookies, falls benötigt
 };
 
