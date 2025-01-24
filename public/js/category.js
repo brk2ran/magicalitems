@@ -20,7 +20,7 @@ async function loadCategoryItems(categoryId) {
           <p>Mana: ${item.mana}</p>
           <p>${item.description}</p>
           <img src="${item.image}" alt="${item.name}" />
-          <button class="edit-button" onclick="editItem(${item.id})">Bearbeiten</button>
+          <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
           <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
         </li>
       `

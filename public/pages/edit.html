@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Bearbeiten</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header"></div>
+    <main>
+        <form id="edit-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="price">Preis:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+
+            <label for="mana">Mana:</label>
+            <input type="number" id="mana" name="mana" required>
+
+            <label for="description">Beschreibung:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="category_id">Kategorie:</label>
+            <select id="category_id" name="category_id" required>
+                <option value="1">Waffen</option>
+                <option value="2">Tränke</option>
+                <option value="3">Rüstungen</option>
+            </select>
+
+            <label for="image">Bild:</label>
+            <input type="file" id="image" name="image">
+
+            <button type="submit">Item Aktualisieren</button>
+        </form>
+    </main>
+    <div id="footer"></div>
+    <script type="module" src="../js/edit.js"></script>
+    <script type="module" src="../js/layout.js"></script>
+</body>
+</html>
