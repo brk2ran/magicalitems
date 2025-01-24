@@ -1,9 +1,55 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Globale Einstellungen */
+body {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1f2328;
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+header, footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: #23272b;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    margin: 0 1rem;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: #ffc107;
+}
+
 /* Globale Layout für Items */
 .items-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
+    margin: 2rem;
+    padding: 0;
+    list-style: none;
 }
 
 .item-card {
@@ -87,4 +133,209 @@
 
 .delete-btn:hover {
     background-color: #c82333;
+}
+
+/* Kategorienübersicht */
+.category-header {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    color: #343a40;
+}
+
+.category-info {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Kontaktformular */
+form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical; /* Benutzer kann die Höhe des Textfeldes ändern */
+}
+
+button {
+    font-family: 'Cinzel Decorative', serif;
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Impressum-Seite */
+.impressum-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.impressum-content p {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.impressum-content strong {
+    font-weight: bold;
+    color: #000;
+}
+
+/* --- Responsives Design --- */
+
+/* Allgemeine Tablet-Ansicht (maximal 768px) */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Kleinere Schriftgröße */
+    }
+
+    header {
+        flex-direction: column; /* Elemente vertikal ausrichten */
+        align-items: center; /* Links ausrichten */
+    }
+
+    header .logo h1 {
+        font-size: 24px; /* Kleinere Schriftgröße für Logo */
+        margin-bottom: 10px;
+    }
+
+    header nav ul {
+        flex-wrap: wrap; /* Tabs umbrechen, wenn nötig */
+        gap: 10px; /* Mehr Abstand für Tablets */
+        justify-content: center; /* Zentrierte Tabs */
+    }
+
+    header nav ul li a, #add-item-btn {
+        font-size: 14px; /* Kleinere Tabs */
+        padding: 0.4rem 0.8rem;
+    }
+
+    .search-bar {
+        flex-direction: column; /* Suchleiste und Button untereinander */
+        align-items: stretch; /* Volle Breite nutzen */
+        gap: 10px; /* Vertikaler Abstand */
+    }
+
+    .search-bar input {
+        width: 100%; /* Input passt sich der Breite an */
+    }
+
+    .search-bar button {
+        width: 100%; /* Button passt sich der Breite an */
+    }
+
+    .items-list {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Kleinere Spaltenbreite */
+        gap: 1rem; /* Weniger Abstand */
+    }
+
+    .item-card img {
+        height: 150px; /* Kleinere Bilder */
+    }
+}
+
+/* Smartphone-Ansicht (maximal 480px) */
+@media screen and (max-width: 480px) {
+    header {
+        padding: 0.5rem; /* Weniger Innenabstand */
+    }
+
+    header .logo h1 {
+        font-size: 18px; /* Noch kleinere Schriftgröße */
+    }
+
+    header nav ul {
+        flex-direction: column; /* Tabs untereinander */
+        gap: 5px; /* Weniger Abstand */
+    }
+
+    .search-bar {
+        gap: 5px; /* Weniger Abstand */
+    }
+
+    .search-bar input, .search-bar button {
+        font-size: 14px; /* Kleinere Schrift */
+        padding: 0.3rem 0.6rem;
+    }
+
+    .items-list {
+        grid-template-columns: 1fr; /* Nur eine Spalte */
+        gap: 0.5rem; /* Weniger Abstand */
+    }
+
+    .item-card {
+        padding: 0.8rem; /* Weniger Innenabstand */
+    }
+
+    .item-card img {
+        height: 120px; /* Noch kleinere Bilder */
+    }
+
+    .back-button a {
+        padding: 8px 12px; /* Kompaktere Buttons */
+        font-size: 14px;
+    }
+
+    footer {
+        font-size: 12px; /* Kleinere Schrift im Footer */
+    }
 }
