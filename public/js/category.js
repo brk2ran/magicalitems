@@ -2,15 +2,19 @@ import { fetchData, deleteItem } from "./api.js";
 
 // Funktion zum Laden der Items einer Kategorie
 async function loadCategoryItems(categoryId) {
+  console.log("Lade Items für Kategorie-ID:", categoryId);
   const itemsList = document.querySelector(".items-list");
   const itemCount = document.getElementById("item-count");
 
   try {
-    // Items für die Kategorie laden
+    // API-Aufruf, um Items für die Kategorie zu laden
     const items = await fetchData(`/items?category_id=${categoryId}`);
+    console.log("Geladene Items:", items);
+
+    // Anzahl der Items anzeigen
     itemCount.textContent = items.length;
 
-    // Items dynamisch einfügen
+    // Items dynamisch in das HTML einfügen
     itemsList.innerHTML = items
       .map(
         (item) => `
@@ -26,8 +30,10 @@ async function loadCategoryItems(categoryId) {
             <button class="delete-btn" onclick="deleteCategoryItem(${item.id})">Löschen</button>
           </div>
         </div>
-      `)
+      `
+      )
       .join("");
+    console.log("Items erfolgreich gerendert.");
   } catch (error) {
     console.error("Fehler beim Laden der Items:", error);
   }
@@ -35,22 +41,32 @@ async function loadCategoryItems(categoryId) {
 
 // Item löschen
 export async function deleteCategoryItem(itemId) {
+  console.log("Lösche Item mit ID:", itemId);
   try {
     const confirmation = confirm("Möchtest du dieses Item wirklich löschen?");
-    if (!confirmation) return;
+    if (!confirmation) {
+      console.log("Löschvorgang abgebrochen.");
+      return;
+    }
 
     const result = await deleteItem(itemId);
+    console.log("Item erfolgreich gelöscht:", result);
+
     alert(result.message || "Item erfolgreich gelöscht!");
 
-    // Items-Liste neu laden
-    loadCategoryItems(categoryId); // Falls vorhanden, aktualisiert die Liste
+    // Seite neu laden, um die Liste zu aktualisieren
+    loadCategoryItems(categoryId);
   } catch (error) {
+    console.error("Fehler beim Löschen des Items:", error);
     alert("Fehler beim Löschen des Items. Bitte versuche es erneut.");
   }
 }
 
 // Kategorie-ID dynamisch basierend auf der Seite setzen
 let categoryId;
+
+// Debugging: Aktuellen Pfad ausgeben
+console.log("Aktueller Pfad:", window.location.pathname);
 
 if (window.location.pathname.includes("weapons.html")) {
   categoryId = 1; // Waffen
@@ -60,12 +76,13 @@ if (window.location.pathname.includes("weapons.html")) {
   categoryId = 3; // Tränke
 }
 
-// Lade die Items für die jeweilige Kategorie
+// Debugging: Kategorie-ID prüfen
 if (categoryId) {
+  console.log("Ermittelte Kategorie-ID:", categoryId);
   loadCategoryItems(categoryId);
 } else {
-  console.error("Kategorie konnte nicht bestimmt werden.");
+  console.error("Kategorie konnte nicht bestimmt werden. Überprüfe den Pfad:", window.location.pathname);
 }
 
+// deleteCategoryItem global verfügbar machen
 window.deleteCategoryItem = deleteCategoryItem;
-
