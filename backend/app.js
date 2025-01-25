@@ -338,7 +338,7 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
 app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => {
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
-  const image = req.file ? `/uploads/${req.file.filename}` : null;
+  const image = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
 
   console.log(`PUT /items/${id} aufgerufen`);
   console.log("Daten für PUT /items:", { name, price, mana, description, category_id, image });
