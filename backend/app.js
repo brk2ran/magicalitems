@@ -322,7 +322,7 @@ app.post("/items", upload.single("image"), validateItem, async (req, res) => {
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
 
-  let imagePath = 'https://res.cloudinary.com/magicalitems/image/upload/v_placeholder.jpg'; // Standard-Placeholder
+  let imagePath = 'https://res.cloudinary.com/dhro6f0ba/image/upload/placeholder_jof68k.png'; // Standard-Placeholder
 
   if (req.file) {
     try {
