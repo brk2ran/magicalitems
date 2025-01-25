@@ -15,12 +15,13 @@ async function loadCategoryItems(categoryId) {
       .map(
         (item) => `
         <div class="item-card">
-          <h2>${item.name}</h2>
-          <p>Preis: ${item.price}</p>
-          <p>Mana: ${item.mana}</p>
-          <p>${item.description}</p>
           <img src="${item.image}" alt="${item.name}" />
+          <h3><strong>${item.name}</strong></h3>
+          <p><strong>Preis:</strong> ${item.price}</p>
+          <p><strong>Mana:</strong> ${item.mana}</p>
+          <p>${item.description}</p>
           <div class="item-actions">
+            <button classe="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
             <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
             <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
           </div>
