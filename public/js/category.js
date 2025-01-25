@@ -14,7 +14,7 @@ async function loadCategoryItems(categoryId) {
     itemsList.innerHTML = items
       .map(
         (item) => `
-        <div class="item-container">
+        <div class="item-card">
           <h2>${item.name}</h2>
           <p>Preis: ${item.price}</p>
           <p>Mana: ${item.mana}</p>
