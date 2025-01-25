@@ -68,11 +68,11 @@ let categoryId;
 // Debugging: Aktuellen Pfad ausgeben
 console.log("Aktueller Pfad:", window.location.pathname);
 
-if (window.location.pathname.includes("weapons.html")) {
+if (window.location.pathname.includes("weapons")) {
   categoryId = 1; // Waffen
-} else if (window.location.pathname.includes("armors.html")) {
+} else if (window.location.pathname.includes("armors")) {
   categoryId = 2; // Rüstungen
-} else if (window.location.pathname.includes("potions.html")) {
+} else if (window.location.pathname.includes("potions")) {
   categoryId = 3; // Tränke
 }
 
