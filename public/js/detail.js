@@ -35,6 +35,14 @@ async function loadItemDetails() {
                 </div>
             </div>
         `;
+
+        // Dynamischen Back-Link setzen
+        const backLink = document.getElementById("back-link");
+        const categoryPath =
+            item.category_id === 1 ? "weapons.html" :
+            item.category_id === 2 ? "potions.html" :
+            "armors.html";
+        backLink.href = `/public/pages/${categoryPath}`;
     } catch (error) {
         console.error("Fehler beim Laden der Item-Details:", error);
         container.innerHTML = "<p>Fehler beim Laden der Item-Details.</p>";
@@ -43,3 +51,4 @@ async function loadItemDetails() {
 
 // Initialisierung
 document.addEventListener("DOMContentLoaded", loadItemDetails);
+

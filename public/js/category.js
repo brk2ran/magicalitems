@@ -36,16 +36,19 @@ async function loadCategoryItems(categoryId) {
 // Item löschen
 async function deleteCategoryItem(itemId) {
   try {
-    if (confirm("Möchtest du dieses Item wirklich löschen?")) {
-      await deleteItem(itemId); // Löscht das Item über die API
-      alert("Item erfolgreich gelöscht!");
-      location.reload(); // Seite neu laden, um die Liste zu aktualisieren
-    }
+    const confirmation = confirm("Möchtest du dieses Item wirklich löschen?");
+    if (!confirmation) return;
+
+    const result = await deleteItem(itemId);
+    alert(result.message || "Item erfolgreich gelöscht!");
+
+    // Items-Liste neu laden
+    loadCategoryItems(categoryId); // Falls vorhanden, aktualisiert die Liste
   } catch (error) {
-    console.error("Fehler beim Löschen des Items:", error);
-    alert("Fehler beim Löschen des Items.");
+    alert("Fehler beim Löschen des Items. Bitte versuche es erneut.");
   }
 }
+
 
 // Beispiel: Kategorie-ID für Waffen
 const categoryId = 1; // Waffen = 1, Rüstungen = 2, Tränke = 3
