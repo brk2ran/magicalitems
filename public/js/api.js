@@ -59,7 +59,7 @@ export async function updateItem(itemId, itemData) {
 // Item löschen
 export async function deleteItem(itemId) {
   try {
-    const response = await fetch(`${BASE_BACKEND_URL}/items/${itemId}`, {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
       method: "DELETE",
     });
 
