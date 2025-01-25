@@ -1,7 +1,5 @@
-// public/js/app.js
-
 const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
-
+/*
 // Funktion zum Laden der Kategorien
 async function loadCategories() {
   const container = document.getElementById("categories-container");
@@ -27,6 +25,8 @@ async function loadCategories() {
     container.innerHTML = `<p>Fehler beim Laden der Kategorien.</p>`;
   }
 }
+*/
+
 
 // Funktion zum Laden der Items
 async function loadItems() {
@@ -59,6 +59,6 @@ async function loadItems() {
 
 // Initialisierung der Inhalte
 document.addEventListener("DOMContentLoaded", () => {
-  loadCategories(); // Kategorien laden
+  // loadCategories();  // Kategorien laden
   loadItems(); // Items laden
 });
