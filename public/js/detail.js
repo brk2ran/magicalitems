@@ -30,6 +30,9 @@ async function loadItemDetails() {
                 <p><strong>Preis:</strong> ${item.price} Gold</p>
                 <p><strong>Mana:</strong> ${item.mana}</p>
                 <p><strong>Beschreibung:</strong> ${item.description}</p>
+                <div class="back-btn">
+                    <a href="#" id="back-link">Zurück zur Kategorie</a>
+                </div>
             </div>
         `;
     } catch (error) {

@@ -21,13 +21,12 @@ async function loadCategoryItems(categoryId) {
           <p><strong>Mana:</strong> ${item.mana}</p>
           <p>${item.description}</p>
           <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
-          <div class="item-actions">
+          <div class="action-buttons">
             <button class="edit-btn" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
             <button class="delete-btn" onclick="deleteCategoryItem(${item.id})">Löschen</button>
           </div>
         </div>
-      `
-      )
+      `)
       .join("");
   } catch (error) {
     console.error("Fehler beim Laden der Items:", error);
