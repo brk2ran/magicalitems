@@ -22,8 +22,8 @@ async function loadCategoryItems(categoryId) {
           <p>${item.description}</p>
           <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
           <div class="item-actions">
-            <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
-            <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
+            <button class="edit-btn" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
+            <button class="delete-btn" onclick="deleteCategoryItem(${item.id})">Löschen</button>
           </div>
         </div>
       `

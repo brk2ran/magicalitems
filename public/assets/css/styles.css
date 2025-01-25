@@ -73,12 +73,12 @@ header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
     background-color: #333;
 }
 
-.back-button {
+.back-btn {
     margin-top: 20px; /* Abstand zur Karte */
     text-align: center; /* Button zentrieren */
 }
 
-.back-button a {
+.back-btn a {
     display: inline-block;
     padding: 10px 20px;
     font-size: 1rem;
@@ -91,7 +91,7 @@ header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
     transition: background-color 0.3s;
 }
 
-.back-button a:hover {
+.back-btn a:hover {
     background-color: #555;
 }
 
@@ -477,46 +477,4 @@ button:hover {
     footer {
         font-size: 12px; /* Kleinere Schrift im Footer */
     }
-}
-
-
-
-.item-card .edit-btn,
-.item-card .delete-btn {
-    width: calc(50% - 0.5rem); /* Beide Buttons teilen sich den Platz */
-    margin: 0.5rem; /* Abstand zwischen den Buttons */
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: #fff; /* Weißer Text */
-    border: none;
-    cursor: pointer;
-}
-
-/* Spezifische Farben für die Buttons */
-.item-card .edit-btn {
-    background-color: #28a745; /* Grün */
-}
-
-.item-card .delete-btn {
-    background-color: #dc3545; /* Rot */
-}
-
-/* Für Hover-Effekte */
-.item-card .edit-btn:hover {
-    background-color: #218838; /* Dunkleres Grün */
-}
-
-.item-card .delete-btn:hover {
-    background-color: #c82333; /* Dunkleres Rot */
-}
-
-/* Button-Container für die horizontale Ausrichtung */
-.item-card .button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem; /* Abstand zum oberen Button */
 }
