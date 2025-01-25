@@ -256,7 +256,7 @@ app.post('/items', upload.single('image'), validateItem, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });*/
-
+/*
 app.post("/items", multer().single("image"), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
 
@@ -286,6 +286,35 @@ app.post("/items", multer().single("image"), validateItem, async (req, res) => {
   } catch (error) {
     console.error("Fehler beim Erstellen des Items:", error.message);
     res.status(500).json({ error: error.message });
+  }
+});
+*/
+
+app.post("/items", upload.single("image"), validateItem, async (req, res) => {
+  const { name, price, mana, description, category_id } = req.body;
+  let imageUrl;
+
+  try {
+      if (req.file) {
+          const result = await cloudinary.uploader.upload(req.file.path, {
+              folder: "magicalitems", // Spezifizierter Ordner
+          });
+          imageUrl = result.secure_url; // URL des hochgeladenen Bildes
+      } else {
+          imageUrl = "https://res.cloudinary.com/dhro6f0ba/image/upload/v1737818972/placeholder_jof68k.png"; // Standardbild
+      }
+
+      const query = `
+          INSERT INTO items (name, price, mana, image, description, category_id)
+          VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
+      `;
+      const values = [name, price, mana, imageUrl, description, category_id];
+      const result = await pool.query(query, values);
+
+      res.status(201).json(result.rows[0]);
+  } catch (error) {
+      console.error("Fehler beim Hochladen des Bildes oder Speichern des Items:", error.message);
+      res.status(500).json({ error: "Fehler beim Erstellen des Items." });
   }
 });
 
@@ -410,7 +439,7 @@ app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => 
     res.status(500).json({ error: err.message });
   }
 });*/
-
+/*
 app.put("/items/:id", multer().single("image"), validateItem, async (req, res) => {
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
@@ -447,6 +476,47 @@ app.put("/items/:id", multer().single("image"), validateItem, async (req, res) =
   } catch (error) {
     console.error(`Fehler beim Aktualisieren des Items mit ID ${id}:`, error.message);
     res.status(500).json({ error: error.message });
+  }
+});
+*/
+
+app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => {
+  const { id } = req.params;
+  const { name, price, mana, description, category_id } = req.body;
+
+  let image = req.body.image; // Standardmäßig die aktuelle URL behalten
+  if (req.file) {
+    try {
+      // Bild in den richtigen Cloudinary-Ordner hochladen
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'magicalitems', // Ordner in Cloudinary
+      });
+      image = result.secure_url; // URL des hochgeladenen Bildes
+    } catch (error) {
+      console.error('Fehler beim Hochladen des Bildes:', error);
+      return res.status(500).json({ error: 'Fehler beim Hochladen des Bildes.' });
+    }
+  }
+
+  try {
+    // Datenbankeintrag aktualisieren
+    const result = await pool.query(
+      `UPDATE items 
+       SET name = $1, price = $2, mana = $3, image = $4, description = $5, category_id = $6 
+       WHERE id = $7 
+       RETURNING *`,
+      [name, price, mana, image, description, category_id, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Item nicht gefunden.' });
+    }
+
+    console.log('Item aktualisiert:', result.rows[0]);
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error('Fehler beim Aktualisieren des Items:', error);
+    res.status(500).json({ error: 'Fehler beim Aktualisieren des Items.' });
   }
 });
 

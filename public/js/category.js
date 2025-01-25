@@ -1,6 +1,4 @@
 import { fetchData, deleteItem } from "./api.js";
-const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
-
 
 // Funktion zum Laden der Items einer Kategorie
 async function loadCategoryItems(categoryId) {
@@ -21,7 +19,7 @@ async function loadCategoryItems(categoryId) {
       .map(
         (item) => `
         <div class="item-card">
-          <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}" />
+          <img src="${item.image}" alt="${item.name}" />
           <h3><strong>${item.name}</strong></h3>
           <p><strong>Preis:</strong> ${item.price}</p>
           <p><strong>Mana:</strong> ${item.mana}</p>
