@@ -49,10 +49,23 @@ export async function deleteCategoryItem(itemId) {
   }
 }
 
+// Kategorie-ID dynamisch basierend auf der Seite setzen
+let categoryId;
 
-// Beispiel: Kategorie-ID für Waffen
-const categoryId = 1; // Waffen = 1, Rüstungen = 2, Tränke = 3
-loadCategoryItems(categoryId);
+if (window.location.pathname.includes("weapons.html")) {
+  categoryId = 1; // Waffen
+} else if (window.location.pathname.includes("armors.html")) {
+  categoryId = 2; // Rüstungen
+} else if (window.location.pathname.includes("potions.html")) {
+  categoryId = 3; // Tränke
+}
+
+// Lade die Items für die jeweilige Kategorie
+if (categoryId) {
+  loadCategoryItems(categoryId);
+} else {
+  console.error("Kategorie konnte nicht bestimmt werden.");
+}
 
 window.deleteCategoryItem = deleteCategoryItem;
 
