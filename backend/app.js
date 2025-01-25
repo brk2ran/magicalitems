@@ -26,11 +26,12 @@ const corsOptions = {
 app.use(cors(corsOptions)); // CORS aktivieren
 app.use(express.json()); // Wichtig für JSON-Parsing
 app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL-encoded-Daten
-app.use(express.static(path.join(__dirname, "uploads"))); // Statische Dateien aus "uploads" bereitstellen
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Statische Dateien aus "uploads" bereitstellen
 
 
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 // 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
 const isProduction = process.env.NODE_ENV === "production";
@@ -80,13 +81,13 @@ const upload = multer({ storage });*/
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, 'uploads');
+    console.log('Speicherort:', 'uploads/'); // Log für Speicherort
     cb(null, uploadPath); // Zielordner für hochgeladene Dateien
-    console.log("Upload-Pfad:", uploadPath);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+    console.log('Dateiname:', uniqueSuffix); // Log für Dateinamen
     cb(null, uniqueSuffix); // Einzigartiger Dateiname
-    console.log("Generierter Dateiname:", uniqueSuffix);
   },
 });
 
@@ -229,6 +230,7 @@ app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
   console.log("Bildpfad:", imagePath);
+  console.log('Uploaded file:', req.file); // Log hochgeladene Datei
 
   try {
     const query = `
