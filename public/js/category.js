@@ -34,7 +34,7 @@ async function loadCategoryItems(categoryId) {
 }
 
 // Item löschen
-async function deleteCategoryItem(itemId) {
+export async function deleteCategoryItem(itemId) {
   try {
     const confirmation = confirm("Möchtest du dieses Item wirklich löschen?");
     if (!confirmation) return;
