@@ -53,3 +53,6 @@ export async function deleteCategoryItem(itemId) {
 // Beispiel: Kategorie-ID für Waffen
 const categoryId = 1; // Waffen = 1, Rüstungen = 2, Tränke = 3
 loadCategoryItems(categoryId);
+
+window.deleteCategoryItem = deleteCategoryItem;
+
