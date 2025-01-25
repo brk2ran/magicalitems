@@ -9,6 +9,8 @@ const cors = require("cors");
 const path = require("path");
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
+const cloudinary = require("cloudinary").v2;
+const streamifier = require("streamifier");
 
 // 2. Initialisiere App und lade Umgebungsvariablen
 dotenv.config();
@@ -22,16 +24,27 @@ const corsOptions = {
   credentials: true, // Für Authentifizierung und Cookies, falls benötigt
 };
 
+// Cloudinary-Konfiguration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // 3. Middleware
 app.use(cors(corsOptions)); // CORS aktivieren
 app.use(express.json()); // Wichtig für JSON-Parsing
+
+/*
 app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL-encoded-Daten
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Statische Dateien aus "uploads" bereitstellen
+*/
 
 
 // Bereitstellen statischer Dateien
+/*
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+*/
 
 // 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
 const isProduction = process.env.NODE_ENV === "production";
@@ -53,7 +66,6 @@ pool.connect((err) => {
 });
 
 // 6. Multer-Konfiguration für Datei-Uploads
-
 /*
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -170,7 +182,6 @@ app.get("/items", async (req, res) => {
 
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
-
 /*
 app.post("/items", upload.single("image"), async (req, res) => {
   console.log("POST /items aufgerufen");
@@ -225,7 +236,7 @@ app.post("/items", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });*/
-
+/*
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
@@ -244,8 +255,39 @@ app.post('/items', upload.single('image'), validateItem, async (req, res) => {
     console.error("Fehler beim Erstellen eines Items:", err.message);
     res.status(500).json({ error: err.message });
   }
-});
+});*/
 
+app.post("/items", multer().single("image"), validateItem, async (req, res) => {
+  const { name, price, mana, description, category_id } = req.body;
+
+  try {
+    let imagePath = "/uploads/placeholder.jpg"; // Platzhalter-Bild
+
+    if (req.file) {
+      // Hochladen des Bildes zu Cloudinary
+      const uploadResult = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+      });
+      imagePath = uploadResult.secure_url; // Gesicherte URL des Bildes
+    }
+
+    // Eintrag in der Datenbank speichern
+    const query = `
+      INSERT INTO items (name, price, mana, image, description, category_id)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const values = [name, price, mana, imagePath, description, category_id];
+
+    const result = await pool.query(query, values);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Fehler beim Erstellen des Items:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // 8.3 Ein Item abrufen
@@ -334,7 +376,7 @@ app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => 
   }
 });
 */
-
+/*
 app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => {
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
@@ -366,6 +408,45 @@ app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => 
   } catch (err) {
     console.error(`Fehler beim Aktualisieren des Items mit ID ${id}:`, err.message);
     res.status(500).json({ error: err.message });
+  }
+});*/
+
+app.put("/items/:id", multer().single("image"), validateItem, async (req, res) => {
+  const { id } = req.params;
+  const { name, price, mana, description, category_id } = req.body;
+
+  try {
+    let imagePath;
+
+    if (req.file) {
+      // Hochladen des neuen Bildes zu Cloudinary
+      const uploadResult = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+      });
+      imagePath = uploadResult.secure_url;
+    }
+
+    // Aktualisieren des Items
+    const query = `
+      UPDATE items
+      SET name = $1, price = $2, mana = $3, image = COALESCE($4, image), description = $5, category_id = $6
+      WHERE id = $7 RETURNING *`;
+    const values = [name, price, mana, imagePath, description, category_id, id];
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Item nicht gefunden" });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error(`Fehler beim Aktualisieren des Items mit ID ${id}:`, error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
