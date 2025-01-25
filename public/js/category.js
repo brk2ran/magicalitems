@@ -20,8 +20,8 @@ async function loadCategoryItems(categoryId) {
           <p><strong>Preis:</strong> ${item.price}</p>
           <p><strong>Mana:</strong> ${item.mana}</p>
           <p>${item.description}</p>
+          <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
           <div class="item-actions">
-            <button classe="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
             <button class="edit-button" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
             <button class="delete-button" onclick="deleteCategoryItem(${item.id})">Löschen</button>
           </div>
