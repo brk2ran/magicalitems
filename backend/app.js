@@ -289,7 +289,7 @@ app.post("/items", multer().single("image"), validateItem, async (req, res) => {
   }
 });
 */
-
+/*
 app.post("/items", upload.single("image"), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
   let imageUrl;
@@ -315,6 +315,38 @@ app.post("/items", upload.single("image"), validateItem, async (req, res) => {
   } catch (error) {
       console.error("Fehler beim Hochladen des Bildes oder Speichern des Items:", error.message);
       res.status(500).json({ error: "Fehler beim Erstellen des Items." });
+  }
+});
+*/
+
+app.post('/items', upload.single('image'), validateItem, async (req, res) => {
+  const { name, price, mana, description, category_id } = req.body;
+
+  let imagePath = 'https://res.cloudinary.com/magicalitems/image/upload/v_placeholder.jpg'; // Standard-Placeholder
+
+  if (req.file) {
+    try {
+      // Bild zu Cloudinary hochladen
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'magicalitems', // Speichere im Ordner "magicalitems"
+      });
+      imagePath = result.secure_url; // Sicheren URL-Link von Cloudinary speichern
+    } catch (err) {
+      console.error('Fehler beim Hochladen zu Cloudinary:', err);
+      return res.status(500).json({ error: 'Bild-Upload fehlgeschlagen' });
+    }
+  }
+
+  try {
+    // Neues Item in der Datenbank speichern
+    const result = await pool.query(
+      'INSERT INTO items (name, price, mana, description, category_id, image) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [name, price, mana, description, category_id, imagePath]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Fehler beim Speichern des Items:', err);
+    res.status(500).json({ error: 'Fehler beim Speichern des Items' });
   }
 });
 
