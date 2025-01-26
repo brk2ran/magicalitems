@@ -19,7 +19,7 @@ async function loadCategoryItems(categoryId) {
       .map(
         (item) => `
         <div class="item-card">
-          <img src="${item.image}" alt="${item.name}" />
+          <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}" />
           <h3><strong>${item.name}</strong></h3>
           <p><strong>Preis:</strong> ${item.price}</p>
           <p><strong>Mana:</strong> ${item.mana}</p>
