@@ -1,6 +1,3 @@
-
-
-
 // 1. Abhängigkeiten laden
 const express = require("express");
 const multer = require("multer");
@@ -26,11 +23,10 @@ const corsOptions = {
 app.use(cors(corsOptions)); // CORS aktivieren
 app.use(express.json()); // Wichtig für JSON-Parsing
 app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL-encoded-Daten
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Statische Dateien aus "uploads" bereitstellen
 
 
 // Bereitstellen statischer Dateien
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join('/data', "uploads")));
 
 
 // 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
@@ -53,34 +49,9 @@ pool.connect((err) => {
 });
 
 // 6. Multer-Konfiguration für Datei-Uploads
-
-/*
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Speichere Bilder im Ordner 'uploads'
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
-  },
-});
-const upload = multer({ storage });*/
-/*
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, "uploads");
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + file.originalname;
-    cb(null, uniqueSuffix);
-  },
-});
-const upload = multer({ storage });*/
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, 'uploads');
+    const uploadPath = path.join('/data', 'uploads');
     console.log('Speicherort:', 'uploads/'); // Log für Speicherort
     cb(null, uploadPath); // Zielordner für hochgeladene Dateien
   },
@@ -170,62 +141,6 @@ app.get("/items", async (req, res) => {
 
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
-
-/*
-app.post("/items", upload.single("image"), async (req, res) => {
-  console.log("POST /items aufgerufen");
-  console.log("Request body:", req.body); // Request-Body loggen
-  console.log("Uploaded file:", req.file); // Datei-Upload loggen
-
-  // Werte aus req.body und req.file extrahieren
-  const { name, price, mana, description, category_id } = req.body;
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.jpg";
-
-  console.log("Finaler Image-Wert:", imagePath);
-
-  try {
-    const query = `
-      INSERT INTO items (name, price, mana, image, description, category_id)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-    const values = [name, price, mana, imagePath, description, category_id];
-
-    const result = await pool.query(query, values);
-    console.log("Neues Item erstellt:", result.rows[0]);
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Fehler in POST /items:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-});*/
-/*
-app.post("/items", upload.single("image"), async (req, res) => {
-  try {
-    console.log("POST /items aufgerufen");
-    console.log("Request body:", req.body);
-    console.log("Uploaded file:", req.file);
-
-    const { name, price, mana, description, category_id } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.jpg";
-
-    if (!name || !price || !mana || !description || !category_id) {
-      console.error("Fehlende Felder:", { name, price, mana, description, category_id });
-      return res.status(400).json({ error: "Alle Felder sind erforderlich" });
-    }
-
-    const query = `
-      INSERT INTO items (name, price, mana, image, description, category_id)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-    const values = [name, price, mana, image, description, category_id];
-
-    const result = await pool.query(query, values);
-    console.log("Item erstellt:", result.rows[0]);
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Fehler beim Erstellen des Items:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-});*/
-
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
@@ -263,78 +178,6 @@ app.get("/items/:id", async (req, res) => {
 });
 
 // 8.4 Ein Item aktualisieren
-/*
-app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => {
-  const { id } = req.params;
-  const { name, price, mana, description, category_id } = req.body;
-  const image = req.file ? `/uploads/${req.file.filename}` : null;
-  console.log(`PUT /items/${id} aufgerufen`);
-  console.log("Daten für PUT /items:", { name, price, mana, description, category_id, image });
-
-  try {
-    const result = await pool.query(
-      "UPDATE items SET name = $1, price = $2, mana = $3, image = COALESCE($4, image), description = $5, category_id = $6 WHERE id = $7 RETURNING *",
-      [name, price, mana, image, description, category_id, id]
-    );
-    if (result.rows.length === 0) {
-      console.log(`Item mit ID ${id} nicht gefunden.`);
-      return res.status(404).json({ error: "Item nicht gefunden" });
-    }
-    console.log("Item aktualisiert:", result.rows[0]);
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.error("Fehler in PUT /items/${id}:", err.message);
-    res.status(500).json({ error: err.message });
-  }
-});*/
-/*
-app.put("/items/:id", upload.single("image"), validateItem, async (req, res) => {
-  const { id } = req.params; // Extrahiere die Item-ID aus der URL
-  const { name, price, mana, description, category_id } = req.body; // Extrahiere die restlichen Felder aus dem Body
-  const image = req.file ? `/uploads/${req.file.filename}` : null; // Verarbeite das hochgeladene Bild
-
-  console.log(`PUT /items/${id} aufgerufen`);
-  console.log("Eingehende Daten:", { name, price, mana, description, category_id, image });
-
-  // Überprüfe, ob alle notwendigen Felder vorhanden sind
-  if (!name || !price || !mana || !description || !category_id) {
-    return res.status(400).json({ error: "Alle Felder sind erforderlich" });
-  }
-
-  try {
-    // Erstelle die Query dynamisch basierend auf den vorhandenen Daten
-    const query = `
-      UPDATE items
-      SET 
-        name = $1, 
-        price = $2, 
-        mana = $3, 
-        image = COALESCE($4, image), 
-        description = $5, 
-        category_id = $6
-      WHERE id = $7
-      RETURNING *
-    `;
-    const values = [name, price, mana, image, description, category_id, id];
-
-    // Führe die Query aus
-    const result = await pool.query(query, values);
-
-    // Wenn kein Eintrag aktualisiert wurde, gibt es das Item nicht
-    if (result.rows.length === 0) {
-      console.log(`Item mit ID ${id} nicht gefunden.`);
-      return res.status(404).json({ error: "Item nicht gefunden" });
-    }
-
-    console.log("Item erfolgreich aktualisiert:", result.rows[0]);
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.error(`Fehler in PUT /items/${id}:`, err.message);
-    res.status(500).json({ error: "Interner Serverfehler" });
-  }
-});
-*/
-
 app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => {
   const { id } = req.params;
   const { name, price, mana, description, category_id } = req.body;
