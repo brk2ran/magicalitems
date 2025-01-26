@@ -118,30 +118,37 @@ app.get("/", (req, res) => {
   res.send("Backend läuft!");
 });
 
-/*
-// 8.1 Alle Items abrufen
+
+// 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie, Suche, Preis)
 app.get("/items", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM items");
-    res.status(200).json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  const { category_id, search, minPrice, maxPrice } = req.query;
+
+  let query = "SELECT * FROM items WHERE 1=1";
+  const values = [];
+
+  // Kategorie-Filter
+  if (category_id) {
+    query += ` AND category_id = $${values.length + 1}`;
+    values.push(category_id);
   }
-});*/
 
-// 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie)
-app.get("/items", async (req, res) => {
-  const { category_id } = req.query;
+  // Volltextsuche (einfacher Ansatz via ILIKE)
+  if (search) {
+    query += ` AND (name ILIKE $${values.length + 1} OR description ILIKE $${values.length + 1})`;
+    values.push(`%${search}%`);
+  }
+
+  // Preisbereich
+  if (minPrice) {
+    query += ` AND price >= $${values.length + 1}`;
+    values.push(minPrice);
+  }
+  if (maxPrice) {
+    query += ` AND price <= $${values.length + 1}`;
+    values.push(maxPrice);
+  }
 
   try {
-    let query = "SELECT * FROM items";
-    const values = [];
-
-    if (category_id) {
-      query += " WHERE category_id = $1";
-      values.push(category_id);
-    }
-
     const result = await pool.query(query, values);
     res.status(200).json(result.rows);
   } catch (err) {
@@ -149,6 +156,7 @@ app.get("/items", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)

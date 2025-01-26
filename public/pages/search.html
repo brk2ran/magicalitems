@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suche & Filter</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main>
+        <h1>Suche & Filter</h1>
+
+        <form id="search-filter-form">
+        <!-- Suchbegriff -->
+        <label for="search">Suchbegriff:</label>
+        <input type="text" id="search" name="search" placeholder="z.B. Schwert" />
+
+        <!-- Preis-Bereich -->
+        <label for="minPrice">Preis ab:</label>
+        <input type="number" id="minPrice" name="minPrice" />
+
+        <label for="maxPrice">Preis bis:</label>
+        <input type="number" id="maxPrice" name="maxPrice" />
+
+        <!-- Kategorie -->
+        <label for="category_id">Kategorie:</label>
+        <select id="category_id" name="category_id">
+            <option value="">Alle</option>
+            <option value="1">Waffen</option>
+            <option value="2">Rüstungen</option>
+            <option value="3">Tränke</option>
+            <!-- usw... -->
+        </select>
+
+        <button type="submit">Filtern</button>
+        </form>
+
+        <div id="search-results"></div>
+    </main>
+  <div id="footer"></div>
+  <script type="module" src="../js/search.js"></script>
+  <script type="module" src="../js/layout.js"></script>
+</body>
+</html>

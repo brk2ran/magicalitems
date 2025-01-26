@@ -74,3 +74,15 @@ export async function deleteItem(itemId) {
   }
 }
 
+export async function searchItems({ search, minPrice, maxPrice, category_id }) {
+  const params = [];
+  if (search) params.push(`search=${encodeURIComponent(search)}`);
+  if (minPrice) params.push(`minPrice=${minPrice}`);
+  if (maxPrice) params.push(`maxPrice=${maxPrice}`);
+  if (category_id) params.push(`category_id=${category_id}`);
+
+  const queryString = params.length ? `?${params.join("&")}` : "";
+
+  // Nutzt unsere fetchData-Hilfsfunktion
+  return fetchData(`/items${queryString}`);
+}
