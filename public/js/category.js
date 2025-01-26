@@ -1,4 +1,5 @@
 import { fetchData, deleteItem } from "./api.js";
+const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
 
 // Funktion zum Laden der Items einer Kategorie
 async function loadCategoryItems(categoryId) {
