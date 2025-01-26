@@ -13,6 +13,7 @@ const fs = require("fs");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const uploadPath = path.join("/data", "uploads");
 
 // CORS-Konfiguration
 const corsOptions = {
