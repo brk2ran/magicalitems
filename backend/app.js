@@ -6,6 +6,8 @@ const cors = require("cors");
 const path = require("path");
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
+const fs = require("fs");
+
 
 // 2. Initialisiere App und lade Umgebungsvariablen
 dotenv.config();
