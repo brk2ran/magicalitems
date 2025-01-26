@@ -29,6 +29,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL
 app.use("/uploads", express.static(path.join('/data', "uploads")));
 
 
+// **Check:** Falls das Verzeichnis /data/uploads noch nicht existiert, wird es angelegt.
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+  console.log(`Ordner "${uploadPath}" wurde angelegt.`);
+}
+
 // 4. PostgreSQL-Pool einrichten (mit SSL für Neon)
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -52,7 +58,7 @@ pool.connect((err) => {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join('/data', 'uploads');
-    console.log('Speicherort:', 'uploads/'); // Log für Speicherort
+    console.log('Speicherort:', uploadPath);
     cb(null, uploadPath); // Zielordner für hochgeladene Dateien
   },
   filename: (req, file, cb) => {
