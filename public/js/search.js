@@ -10,7 +10,7 @@ async function fetchSearchResults() {
     const category_id = params.get('category_id');
 
     const resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = ''; // Ergebnisse leeren
+    resultsContainer.innerHTML = ''; // Clear previous results
 
     if (!search && !minPrice && !maxPrice && !category_id) {
         resultsContainer.innerHTML = '<p>Bitte geben Sie einen Suchbegriff ein oder setzen Sie Filter.</p>';
@@ -19,12 +19,11 @@ async function fetchSearchResults() {
 
     try {
         const items = await searchItems({ search, minPrice, maxPrice, category_id });
-
         resultsContainer.innerHTML = items.length === 0
             ? '<p>Keine Ergebnisse gefunden.</p>'
             : items.map(item => `
               <div class="item-card">
-                <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}" />
+                <img src="https://magicalitems.onrender.com${item.image}" alt="${item.name}" />
                 <h3><strong>${item.name}</strong></h3>
                 <p><strong>Preis:</strong> ${item.price}</p>
                 <p><strong>Mana:</strong> ${item.mana}</p>
@@ -38,14 +37,18 @@ async function fetchSearchResults() {
     }
 }
 
-document.getElementById('search-filter-form').addEventListener('submit', (e) => {
-    e.preventDefault();
+// Trigger search on Enter or submit
+document.addEventListener('DOMContentLoaded', () => {
+    fetchSearchResults();
 
-    const formData = new FormData(e.target);
-    const query = new URLSearchParams(formData).toString();
-
-    window.location.href = `/pages/search.html?${query}`;
+    const form = document.getElementById('search-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const query = new URLSearchParams(formData).toString();
+            window.location.href = `/pages/search.html?${query}`;
+        });
+    }
 });
-
-document.addEventListener('DOMContentLoaded', fetchSearchResults);
 
