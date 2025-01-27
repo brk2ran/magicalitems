@@ -23,12 +23,14 @@ async function fetchSearchResults() {
         resultsContainer.innerHTML = items.length === 0
             ? '<p>Keine Ergebnisse gefunden.</p>'
             : items.map(item => `
-                <div class="item-card">
-                    <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}">
-                    <h3>${item.name}</h3>
-                    <p>Preis: ${item.price}</p>
-                    <a href="/public/pages/detail.html?id=${item.id}" class="details-btn">Details ansehen</a>
-                </div>
+              <div class="item-card">
+                <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}" />
+                <h3><strong>${item.name}</strong></h3>
+                <p><strong>Preis:</strong> ${item.price}</p>
+                <p><strong>Mana:</strong> ${item.mana}</p>
+                <p>${item.description}</p>
+                <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
+              </div>
             `).join('');
     } catch (err) {
         console.error('Fehler beim Abrufen der Suchergebnisse:', err);
