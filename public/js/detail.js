@@ -24,15 +24,19 @@ async function loadItemDetails() {
 
         // Dynamisches HTML für das Item
         container.innerHTML = `
-            <div class="item-card">
+            <div class="item-detail-container">
+                <div class="item-detail-image">
                 <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}">
-                <h3>${item.name}</h3>
-                <p><strong>Preis:</strong> ${item.price} Gold</p>
-                <p><strong>Mana:</strong> ${item.mana}</p>
-                <p><strong>Beschreibung:</strong> ${item.description}</p>
-                <div class="back-btn">
-                    <a href="#" id="back-link">Zurück zur Kategorie</a>
                 </div>
+                    <div class="item-detail-attributes">
+                        <h3>${item.name}</h3>
+                        <p><strong>Preis:</strong> ${item.price} Gold</p>
+                        <p><strong>Mana:</strong> ${item.mana}</p>
+                        <p><strong>Beschreibung:</strong> ${item.description}</p>
+                        <div class="back-btn">
+                            <a href="#" id="back-link">Zurück zur Kategorie</a>
+                        </div>
+                    </div>
             </div>
         `;
 

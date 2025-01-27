@@ -83,10 +83,12 @@ header .controls #add-item-btn:hover {
 
 header .controls .search-bar {
     font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9rem;
     display: flex;
     align-items: flex-start; /* Elemente links ausrichten oder center */
     position: relative;
     background-color: transparent;
+    color: white;
     border: 2px solid white;
     border-radius: 20px;
     padding: 0.5rem 1rem; /* Gleiche Abstände wie der Button */
@@ -137,7 +139,6 @@ footer {
     display: block;
 }
 
-/* Standardmäßig verstecken */
 #header-filters.hidden {
     display: none; /* Versteckt, wenn nicht aktiv */
 }
@@ -264,30 +265,38 @@ h2 {
     transition: all 0.3s ease;
 }
 
-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
-}
-
-button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-family: 'Cinzel Decorative', cursive;
-}
-
-button:hover {
-    background-color: #555;
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
-}
+.item-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .item-detail-image {
+    flex: 1;
+    max-width: 300px; /* Größe des Bildes */
+  }
+  
+  .item-detail-attributes {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .item-detail-attributes h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .item-detail-attributes p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
 
 /* Zusätzliche Stile */
 label {
@@ -387,7 +396,6 @@ button:hover {
     font-weight: bold;
     color: #000;
 }
-
 
 /* --- Responsives Design --- */
 
