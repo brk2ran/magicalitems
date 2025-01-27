@@ -32,7 +32,6 @@ async function loadItemDetails() {
                     <a href="#" id="back-link">Zurück zur Kategorie</a>
                 </div>
             </div>
-        </div>
             <div class="item-detail-attributes">
                 <h3>${item.name}</h3>
                 <p><strong>Preis:</strong> ${item.price} Gold</p>

@@ -247,6 +247,7 @@ h2 {
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
 }
+
 .item-detail-wrapper {
     max-width: 1000px; /* Begrenzt die Gesamtbreite */
     margin: 20px auto; /* Zentriert den Wrapper */
