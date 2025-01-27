@@ -28,7 +28,7 @@ async function fetchSearchResults() {
                 <h3><strong>${item.name}</strong></h3>
                 <p><strong>Preis:</strong> ${item.price}</p>
                 <p><strong>Mana:</strong> ${item.mana}</p>
-                <p>${item.description}</p>
+                <p><strong>Beschreibung:</strong> ${item.description}</p>
                 <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
               </div>
             `).join('');

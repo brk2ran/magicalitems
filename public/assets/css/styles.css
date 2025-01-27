@@ -477,3 +477,24 @@ button:hover {
         font-size: 12px; /* Kleinere Schrift im Footer */
     }
 }
+
+/* Standardmäßig ausgeblendet */
+#header-filters.hidden {
+    display: none;
+}
+
+/* Sichtbar machen */
+#header-filters {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Animation bei Sichtbarkeit */
+#header-filters.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
