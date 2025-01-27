@@ -275,9 +275,11 @@ h2 {
     padding: 20px;
   }
   
-  .item-detail-image {
-    flex: 1;
-    max-width: 300px; /* Größe des Bildes */
+  .item-detail-image img {
+    width: 100%;
+    max-width: 300px; /* Maximale Breite des Bildes */
+    height: auto; /* Beibehaltung des Seitenverhältnisses */
+    object-fit: contain; /* Verhindert Verzerrungen */
   }
   
   .item-detail-attributes {
@@ -287,7 +289,7 @@ h2 {
     gap: 10px;
   }
   
-  .item-detail-attributes h2 {
+  .item-detail-attributes h3 {
     font-size: 24px;
     margin-bottom: 10px;
   }
@@ -295,6 +297,22 @@ h2 {
   .item-detail-attributes p {
     font-size: 18px;
     line-height: 1.5;
+  }
+  
+  .back-btn a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .back-btn a:hover {
+    background-color: #000;
+    color: #fff;
   }
   
 
