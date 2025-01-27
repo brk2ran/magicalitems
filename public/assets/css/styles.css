@@ -159,6 +159,51 @@ h2 {
     object-fit: cover;
 }
 
+.search-bar {
+    display: flex;
+    flex-direction: column; /* Layout in Spaltenrichtung */
+    align-items: flex-start; /* Elemente links ausrichten */
+    position: relative; /* Für absolute Positionierung der Filter */
+}
+
+.search-bar input[type="text"] {
+    margin-bottom: 8px; /* Abstand zum Filter */
+    width: 100%; /* Volle Breite nutzen */
+}
+
+.search-bar button {
+    padding: 5px 10px; /* Kompaktere Buttons */
+    font-size: 16px;
+}
+
+#add-item-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+}
+
+/* Sichtbar machen */
+#header-filters {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+#header-filters.visible {
+    display: block;
+}
+
+
+/* Standardmäßig verstecken */
+#header-filters.hidden {
+    display: none; /* Versteckt, wenn nicht aktiv */
+}
+
 /* --- Detailseite --- */
 /* Container für die Detailansicht */
 .detail-container {
