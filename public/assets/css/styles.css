@@ -248,6 +248,16 @@ h2 {
     transition: all 0.3s ease;
 }
 
+.item-detail-wrapper {
+    max-width: 800px; /* Begrenzt die Breite des Containers */
+    margin: 20px auto; /* Zentriert den Container */
+    padding: 20px;
+    border: 1px solid #ddd; /* Rahmen um den Container */
+    border-radius: 10px; /* Abgerundete Ecken */
+    background-color: #fff; /* Weißer Hintergrund */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sanfter Schatten */
+  }
+
 .item-detail-container {
     display: flex;
     flex-wrap: wrap;
@@ -269,6 +279,7 @@ h2 {
     max-width: 300px; /* Maximale Breite des Bildes */
     height: auto; /* Beibehaltung des Seitenverhältnisses */
     object-fit: contain; /* Verhindert Verzerrungen */
+    border-radius: 8px;
   }
   
   .item-detail-attributes {
@@ -292,7 +303,7 @@ h2 {
   .back-btn a {
     display: block;
     margin: 0 auto;
-    color: white;
+    color: #000;
     text-decoration: none;
     text-align: center;
     font-weight: bold;
@@ -302,12 +313,10 @@ h2 {
   }
   
   .back-btn a:hover {
-    background-color: #000;
-    color: #fff;
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
   }
-  
+
 
 /* Zusätzliche Stile */
 label {
