@@ -83,7 +83,8 @@ header .controls #add-item-btn:hover {
 
 header .controls .search-bar {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Elemente links ausrichten oder center */
+    position: relative;
     background-color: transparent;
     border: 2px solid white;
     border-radius: 20px;
@@ -92,7 +93,7 @@ header .controls .search-bar {
     width: auto; /* Passt sich dem Inhalt an */
 }
 
-header .controls .search-bar input {
+header .controls .search-bar input[type="text"] {
     border: none;
     background: transparent;
     color: white;
@@ -101,6 +102,7 @@ header .controls .search-bar input {
     padding: 0;
     outline: none; /* Entfernt blauen Fokusrahmen */
     width: auto; /* Passt sich dem Inhalt an */
+    margin-bottom: 8px; /* Abstand zum Filter */
 }
 
 header .controls .search-bar input::placeholder {
@@ -115,85 +117,13 @@ footer {
     margin-top: auto;
 }
 
-/* --- Hauptbereich --- */
-main {
-    padding: 20px;
-    flex: 1;
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-size: 28px;
-}
-
-:root {
-    --min-card-width: 300px;
-}
-
-/* --- Grid-Layout für Items --- */
-:root {
-    --min-card-width: 300px;
-}
-.items-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.item-card, .detail-container .item-card, .search-result-card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
-    transition: transform 0.3s ease;
-}
-
-.item-card:hover, .detail-container .item-card:hover, .search-result-card:hover {
-    /*transform: translateY(-5px);*/
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
-}
-
-.item-card img, .detail-container .item-card img, .search-result-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    object-fit: cover;
-}
-
-.search-bar {
-    display: flex;
-    flex-direction: column; /* Layout in Spaltenrichtung */
-    align-items: flex-start; /* Elemente links ausrichten */
-    position: relative; /* Für absolute Positionierung der Filter */
-}
-
-.search-bar input[type="text"] {
-    margin-bottom: 8px; /* Abstand zum Filter */
-    width: 100%; /* Volle Breite nutzen */
-}
-
-.search-bar button {
-    padding: 5px 10px; /* Kompaktere Buttons */
-    font-size: 16px;
-}
-
-#add-item-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-}
-
-/* Sichtbar machen */
+/* Filter im Header sichtbar und unsichtbar */
 #header-filters {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color: transparent;
+    border: 1px solid white;
     border-radius: 8px;
     padding: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -209,33 +139,55 @@ h2 {
     display: none; /* Versteckt, wenn nicht aktiv */
 }
 
-/* --- Detailseite --- */
-/* Container für die Detailansicht */
-.detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    padding: 2px;
-    max-width: 400px;
-    text-align: center;
+/* --- Hauptbereich --- */
+main {
+    padding: 20px;
+    flex: 1;
 }
 
-/* Bild-Einstellungen */
-.detail-container img {
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* --- Grid-Layout für Items --- */
+:root {
+    --min-card-width: 300px;
+}
+.items-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.item-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
+    transition: transform 0.3s ease;
+}
+
+.item-card:hover {
+    /*transform: translateY(-5px);*/
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+.item-card img{
     max-width: 100%;
     height: auto;
-    display: block;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
+    object-fit: cover;
 }
 
-/* Text unter dem Bild */
-.detail-container h3,
-.detail-container p {
-    margin: 10px 0;
-}
+/* --- Detailseite --- */
+
+/* Container für die Detailansicht */
 .action-buttons {
     display: flex;
     justify-content: center;
@@ -289,19 +241,6 @@ h2 {
     background-color: #23272b;
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
-}
-
-/* Anpassung für die .form-row */
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px; /* Abstand zwischen den Eingabefeldern */
-    margin-bottom: 20px;
-}
-
-.form-row .form-group {
-    flex: 1; /* Felder gleichmäßig verteilen */
 }
 
 textarea {
@@ -432,7 +371,7 @@ button:hover {
 /* --- Responsives Design --- */
 
 /* Allgemeine Tablet-Ansicht (maximal 768px) */
-/*
+
 @media screen and (max-width: 768px) {
     body {
         font-size: 14px;
@@ -476,47 +415,10 @@ button:hover {
     .item-card img {
         height: 150px;
     }
-}*/
-
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 14px; /* Kleinere Schriftgröße */
-    }
-
-    header {
-        flex-direction: column; /* Elemente vertikal anordnen */
-        align-items: center; /* Zentrierung */
-    }
-
-    header .logo h1 {
-        font-size: 24px; /* Kleinere Schriftgröße für Logo */
-        margin-bottom: 10px;
-    }
-
-    header nav ul {
-        flex-wrap: wrap; /* Tabs umbrechen */
-        justify-content: center;
-    }
-
-    header .controls {
-        width: 100%; /* Volle Breite */
-        justify-content: space-between;
-    }
-
-    header .controls .search-bar {
-        flex: none;
-        max-width: 70%; /* Begrenzte Breite */
-    }
-
-    header .controls #add-item-btn {
-        flex: none;
-        width: auto;
-        text-align: center; /* Zentrierter Text */
-    }
 }
 
+
 /* Smartphone-Ansicht (maximal 480px) */
-/*
 @media screen and (max-width: 480px) {
     header {
         padding: 0.5rem; 
@@ -560,40 +462,5 @@ button:hover {
 
     footer {
         font-size: 12px; 
-    }
-}*/
-
-@media screen and (max-width: 480px) {
-    header {
-        padding: 0.5rem;
-    }
-
-    header .logo h1 {
-        font-size: 18px; /* Kleinere Schriftgröße */
-    }
-
-    header nav ul {
-        flex-direction: column; /* Tabs untereinander */
-        gap: 5px;
-    }
-
-    header .controls {
-        flex-direction: column; /* Suchleiste und Button stapeln */
-        gap: 0.5rem;
-        width: 100%;
-    }
-
-    header .controls .search-bar {
-        width: 100%;
-    }
-
-    header .controls #add-item-btn {
-        width: 100%; /* Button über volle Breite */
-        text-align: center;
-    }
-
-    header .controls .search-bar input {
-        font-size: 14px;
-        padding: 0.3rem 0.6rem;
     }
 }
