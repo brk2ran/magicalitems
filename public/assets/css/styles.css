@@ -59,7 +59,7 @@ header nav ul li a:hover {
 header .controls {
     display: flex;
     align-items: center;
-    gap: 20%; /* Abstand zwischen Suche und Button */
+    gap: 1rem; /* Abstand zwischen Suche und Button */
     flex-wrap: wrap; /* Elemente umbrechen, falls nötig */
 }
 
@@ -328,6 +328,7 @@ input, select, textarea {
 /* Kontaktformular */
 form {
     max-width: 600px;
+    margin: 2rem auto;
     padding: 1rem;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
