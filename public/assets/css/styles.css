@@ -27,6 +27,12 @@ header, footer {
     padding: 0.5rem 1rem;
 }
 
+footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -60,6 +66,7 @@ header .controls {
     display: flex;
     align-items: center;
     gap: 1rem; /* Abstand zwischen Suche und Button */
+    flex-wrap: wrap; /* Elemente umbrechen, falls nötig */
 }
 
 header .controls #add-item-btn {
@@ -105,13 +112,6 @@ header .controls .search-bar input::placeholder {
     color: #ccc;
 }
 
-
-footer {
-    text-align: center;
-    font-size: 14px;
-    margin-top: auto;
-}
-
 /* --- Hauptbereich --- */
 main {
     padding: 20px;
@@ -123,11 +123,11 @@ h2 {
     font-size: 28px;
 }
 
+/* --- Grid-Layout für Items --- */
 :root {
     --min-card-width: 300px;
 }
 
-/* --- Grid-Layout für Items --- */
 .items-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
@@ -157,51 +157,6 @@ h2 {
     border-radius: 8px;
     margin-bottom: 1rem;
     object-fit: cover;
-}
-
-.search-bar {
-    display: flex;
-    flex-direction: column; /* Layout in Spaltenrichtung */
-    align-items: flex-start; /* Elemente links ausrichten */
-    position: relative; /* Für absolute Positionierung der Filter */
-}
-
-.search-bar input[type="text"] {
-    margin-bottom: 8px; /* Abstand zum Filter */
-    width: 100%; /* Volle Breite nutzen */
-}
-
-.search-bar button {
-    padding: 5px 10px; /* Kompaktere Buttons */
-    font-size: 16px;
-}
-
-#add-item-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-}
-
-/* Sichtbar machen */
-#header-filters {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
-}
-
-#header-filters.visible {
-    display: block;
-}
-
-
-/* Standardmäßig verstecken */
-#header-filters.hidden {
-    display: none; /* Versteckt, wenn nicht aktiv */
 }
 
 /* --- Detailseite --- */
@@ -429,14 +384,60 @@ button:hover {
 /* --- Responsives Design --- */
 
 /* Allgemeine Tablet-Ansicht (maximal 768px) */
+/*
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center; 
+    }
+
+    header nav ul li a, #add-item-btn {
+        font-size: 14px;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .search-bar {
+        flex-direction: column; 
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    .items-list {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .item-card img {
+        height: 150px;
+    }
+}*/
+
 @media screen and (max-width: 768px) {
     body {
         font-size: 14px; /* Kleinere Schriftgröße */
     }
 
     header {
-        flex-direction: column; /* Elemente vertikal ausrichten */
-        align-items: center; /* Links ausrichten */
+        flex-direction: column; /* Elemente vertikal anordnen */
+        align-items: center; /* Zentrierung */
     }
 
     header .logo h1 {
@@ -445,83 +446,106 @@ button:hover {
     }
 
     header nav ul {
-        flex-wrap: wrap; /* Tabs umbrechen, wenn nötig */
-        gap: 10px; /* Mehr Abstand für Tablets */
-        justify-content: center; /* Zentrierte Tabs */
+        flex-wrap: wrap; /* Tabs umbrechen */
+        justify-content: center;
     }
 
-    header nav ul li a, #add-item-btn {
-        font-size: 14px; /* Kleinere Tabs */
-        padding: 0.4rem 0.8rem;
+    header .controls {
+        width: 100%; /* Volle Breite */
+        justify-content: space-between;
     }
 
-    .search-bar {
-        flex-direction: column; /* Suchleiste und Button untereinander */
-        align-items: stretch; /* Volle Breite nutzen */
-        gap: 10px; /* Vertikaler Abstand */
+    header .controls .search-bar {
+        flex: none;
+        max-width: 70%; /* Begrenzte Breite */
     }
 
-    .search-bar input {
-        width: 100%; /* Input passt sich der Breite an */
-    }
-
-    .search-bar button {
-        width: 100%; /* Button passt sich der Breite an */
-    }
-
-    .items-list {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Kleinere Spaltenbreite */
-        gap: 1rem; /* Weniger Abstand */
-    }
-
-    .item-card img {
-        height: 150px; /* Kleinere Bilder */
+    header .controls #add-item-btn {
+        flex: none;
+        width: auto;
+        text-align: center; /* Zentrierter Text */
     }
 }
 
 /* Smartphone-Ansicht (maximal 480px) */
+/*
 @media screen and (max-width: 480px) {
     header {
-        padding: 0.5rem; /* Weniger Innenabstand */
+        padding: 0.5rem; 
     }
 
     header .logo h1 {
-        font-size: 18px; /* Noch kleinere Schriftgröße */
+        font-size: 18px; 
     }
 
     header nav ul {
-        flex-direction: column; /* Tabs untereinander */
-        gap: 5px; /* Weniger Abstand */
+        flex-direction: column;
+        gap: 5px;
     }
 
     .search-bar {
-        gap: 5px; /* Weniger Abstand */
+        gap: 5px;
     }
 
     .search-bar input, .search-bar button {
-        font-size: 14px; /* Kleinere Schrift */
+        font-size: 14px;
         padding: 0.3rem 0.6rem;
     }
 
     .items-list {
-        grid-template-columns: 1fr; /* Nur eine Spalte */
-        gap: 0.5rem; /* Weniger Abstand */
+        grid-template-columns: 1fr; 
+        gap: 0.5rem;
     }
 
     .item-card {
-        padding: 0.8rem; /* Weniger Innenabstand */
+        padding: 0.8rem;
     }
 
     .item-card img {
-        height: 120px; /* Noch kleinere Bilder */
+        height: 120px; 
     }
 
     .back-button a {
-        padding: 8px 12px; /* Kompaktere Buttons */
+        padding: 8px 12px; 
         font-size: 14px;
     }
 
     footer {
-        font-size: 12px; /* Kleinere Schrift im Footer */
+        font-size: 12px; 
+    }
+}*/
+
+@media screen and (max-width: 480px) {
+    header {
+        padding: 0.5rem;
+    }
+
+    header .logo h1 {
+        font-size: 18px; /* Kleinere Schriftgröße */
+    }
+
+    header nav ul {
+        flex-direction: column; /* Tabs untereinander */
+        gap: 5px;
+    }
+
+    header .controls {
+        flex-direction: column; /* Suchleiste und Button stapeln */
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    header .controls .search-bar {
+        width: 100%;
+    }
+
+    header .controls #add-item-btn {
+        width: 100%; /* Button über volle Breite */
+        text-align: center;
+    }
+
+    header .controls .search-bar input {
+        font-size: 14px;
+        padding: 0.3rem 0.6rem;
     }
 }
