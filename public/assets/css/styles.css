@@ -289,22 +289,25 @@ h2 {
     line-height: 1.5;
   }
   
-  .back-btn {
+  .back-btn a {
     display: block;
-    margin: 0 auto; /* Zentrieren des Details-Buttons */
-    text-align: center;
-    background-color: #343a40;
+    margin: 0 auto;
     color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #000;
     padding: 10px 15px;
     border-radius: 4px;
-    text-decoration: none;
-}
-
-.back-btn:hover {
-    background-color: #23272b;
+  }
+  
+  .back-btn a:hover {
+    background-color: #000;
+    color: #fff;
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
-}
+  }
+  
 
 /* Zusätzliche Stile */
 label {
