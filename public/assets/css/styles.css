@@ -82,6 +82,7 @@ header .controls #add-item-btn:hover {
 }
 
 header .controls .search-bar {
+    font-family: 'Cinzel Decorative', serif;
     display: flex;
     align-items: flex-start; /* Elemente links ausrichten oder center */
     position: relative;
@@ -94,6 +95,7 @@ header .controls .search-bar {
 }
 
 header .controls .search-bar input[type="text"] {
+    font-family: 'Cinzel Decorative', serif;
     border: none;
     background: transparent;
     color: white;
@@ -106,6 +108,7 @@ header .controls .search-bar input[type="text"] {
 }
 
 header .controls .search-bar input::placeholder {
+    font-family: 'Cinzel Decorative', serif;
     color: white; /* Gleiche Farbe wie der Text */
     text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
     font-size: 0.9rem; /* Gleiche Schriftgröße wie der Text */
@@ -196,7 +199,8 @@ h2 {
 }
 
 .edit-btn, .delete-btn {
-    font-family: 'Cinzel Decorative', serif;    padding: 10px 15px;
+    font-family: 'Cinzel Decorative', serif;    
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     font-size: 14px;
@@ -238,6 +242,23 @@ h2 {
 }
 
 .details-btn:hover {
+    background-color: #23272b;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+.back-btn {
+    display: block;
+    margin: 0 auto; /* Zentrieren des Details-Buttons */
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.back-btn:hover {
     background-color: #23272b;
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
