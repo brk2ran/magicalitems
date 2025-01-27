@@ -35,10 +35,25 @@ header {
 }
 
 header nav ul {
+    list-style: none;
     flex: 1; /* Tabs nehmen den freien Platz ein */
     display: flex;
     justify-content: center;
     gap: 1rem; /* Abstand zwischen Tabs */
+}
+
+header nav ul li a {
+    border: 2px solid white; /* Weißer Rand */
+    border-radius: 20px; /* Abgerundete Ecken */
+    padding: 0.5rem 1rem;
+    text-decoration: none; /* Unterstreichung entfernen */
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #555; /* Hintergrund beim Hover */
+    border-color: #ccc; /* Hellere Rahmenfarbe */
 }
 
 header .controls {
@@ -62,9 +77,11 @@ header .controls #add-item-btn:hover {
 }
 
 header .controls .search-bar {
+    flex: 1;
     display: flex;
     align-items: center;
-    background-color: #444;
+    background-color: transparent;
+    border: 2px solid white;
     border-radius: 20px;
     padding: 0.2rem 0.5rem;
 }
@@ -74,7 +91,7 @@ header .controls .search-bar input {
     background: transparent;
     color: white;
     font-size: 0.9rem;
-    padding: 0.2rem;
+    padding: 0.5rem;
     outline: none;
     flex: 1;
 }
@@ -169,19 +186,11 @@ h2 {
     border-radius: 8px;
     padding: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 200px;
-    z-index: 100;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
 }
 
 #header-filters.visible {
-    opacity: 1;
-    transform: scale(1);
+    display: block;
 }
 
 

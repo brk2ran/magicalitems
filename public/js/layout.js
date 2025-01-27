@@ -38,25 +38,38 @@ async function loadFooter() {
 
 // Initialisiere Header-Interaktionen
 function initializeHeaderInteractions() {
-    const searchInput = document.getElementById('search-input');
-    const headerFilters = document.getElementById('header-filters');
+  const searchInput = document.getElementById('search-input');
+  const headerFilters = document.getElementById('header-filters');
 
-    if (searchInput && headerFilters) {
-        // Beim Fokus das Filterfeld anzeigen
-        searchInput.addEventListener('focus', () => {
-            headerFilters.classList.remove('hidden');
-            headerFilters.classList.add('visible');
-        });
+  if (searchInput && headerFilters) {
+      // Beim Fokus das Filterfeld anzeigen
+      searchInput.addEventListener('focus', () => {
+          headerFilters.classList.remove('hidden');
+          headerFilters.classList.add('visible');
+      });
 
-        // Beim Verlassen des Suchfeldes das Filterfeld ausblenden
-        searchInput.addEventListener('blur', () => {
-            setTimeout(() => {
-                headerFilters.classList.remove('visible');
-                headerFilters.classList.add('hidden');
-            }, 200);
-        });
-    }
+      // Beim Fokus auf die Filter-Eingabefelder ebenfalls sichtbar halten
+      headerFilters.addEventListener('focusin', () => {
+          headerFilters.classList.remove('hidden');
+          headerFilters.classList.add('visible');
+      });
+
+      // Beim Verlassen (blur) des Suchfelds oder der Filter-Eingabefelder ausblenden
+      const hideFilters = () => {
+          setTimeout(() => {
+              // Überprüfen, ob weder das Suchfeld noch die Filter den Fokus haben
+              if (!searchInput.matches(':focus') && !headerFilters.matches(':focus-within')) {
+                  headerFilters.classList.remove('visible');
+                  headerFilters.classList.add('hidden');
+              }
+          }, 200); // Kurze Verzögerung, um Klicks auf die Filterfelder zu erlauben
+      };
+
+      searchInput.addEventListener('blur', hideFilters);
+      headerFilters.addEventListener('focusout', hideFilters);
+  }
 }
+
 
 // Beide Funktionen aufrufen
 document.addEventListener("DOMContentLoaded", () => {
