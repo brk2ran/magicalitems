@@ -27,12 +27,6 @@ header, footer {
     padding: 0.5rem 1rem;
 }
 
-footer {
-    text-align: center;
-    font-size: 14px;
-    margin-top: auto;
-}
-
 header {
     display: flex;
     justify-content: space-between;
@@ -72,10 +66,10 @@ header .controls {
 header .controls #add-item-btn {
     flex: none;
     border: 2px solid white;
+    border-radius: 20px;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
-    border-radius: 20px;
-    width: auto;
+    width: auto; /* Breite passt sich dem Inhalt an */
     background-color: transparent;
     color: white;
     text-transform: uppercase;
@@ -93,7 +87,7 @@ header .controls .search-bar {
     background-color: transparent;
     border: 2px solid white;
     border-radius: 20px;
-    padding: 0.2rem 0.5rem;
+    padding: 0.5rem 1rem; /* Gleiche Abstände wie der Button */
     flex: none; /* Verhindert, dass die Suchleiste Platz füllt */
     width: auto; /* Passt sich dem Inhalt an */
 }
@@ -102,14 +96,23 @@ header .controls .search-bar input {
     border: none;
     background: transparent;
     color: white;
-    font-size: 0.9rem;
-    padding: 0.5rem;
+    font-size: 0.9rem; /* Gleiche Schriftgröße wie der Button */
+    text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
+    padding: 0;
     outline: none; /* Entfernt blauen Fokusrahmen */
-    width: 200px;
+    width: auto; /* Passt sich dem Inhalt an */
 }
 
 header .controls .search-bar input::placeholder {
-    color: #ccc;
+    color: white; /* Gleiche Farbe wie der Text */
+    text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
+    font-size: 0.9rem; /* Gleiche Schriftgröße wie der Text */
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
 }
 
 /* --- Hauptbereich --- */
@@ -123,11 +126,14 @@ h2 {
     font-size: 28px;
 }
 
-/* --- Grid-Layout für Items --- */
 :root {
     --min-card-width: 300px;
 }
 
+/* --- Grid-Layout für Items --- */
+:root {
+    --min-card-width: 300px;
+}
 .items-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
@@ -197,7 +203,6 @@ h2 {
 #header-filters.visible {
     display: block;
 }
-
 
 /* Standardmäßig verstecken */
 #header-filters.hidden {
@@ -336,8 +341,6 @@ input, select, textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-
 
 /* Kontaktformular */
 form {
