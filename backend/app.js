@@ -1,5 +1,3 @@
-
-
 // 1. Abhängigkeiten laden
 const express = require("express");
 const multer = require("multer");
@@ -9,7 +7,6 @@ const path = require("path");
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
 const fs = require("fs");
-
 
 // 2. Initialisiere App und lade Umgebungsvariablen
 dotenv.config();
@@ -29,10 +26,8 @@ app.use(cors(corsOptions)); // CORS aktivieren
 app.use(express.json()); // Wichtig für JSON-Parsing
 app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL-encoded-Daten
 
-
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join('/data', "uploads")));
-
 
 // **Check:** Falls das Verzeichnis /data/uploads noch nicht existiert, wird es angelegt.
 if (!fs.existsSync(uploadPath)) {
@@ -75,7 +70,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
 // Debug-Logs für Middleware
 console.log("Middleware initialized:");
 console.log("express.json() enabled");
@@ -110,14 +104,12 @@ function validateItem(req, res, next) {
   next();
 }
 
-
 // 8. Routen
 
 // Testroute
 app.get("/", (req, res) => {
   res.send("Backend läuft!");
 });
-
 
 // 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie, Suche, Preis)
 app.get("/items", async (req, res) => {
@@ -157,8 +149,6 @@ app.get("/items", async (req, res) => {
   }
 });
 
-
-
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
@@ -179,8 +169,6 @@ app.post('/items', upload.single('image'), validateItem, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 // 8.3 Ein Item abrufen
 app.get("/items/:id", async (req, res) => {
@@ -230,7 +218,6 @@ app.put('/items/:id', upload.single('image'), validateItem, async (req, res) => 
     res.status(500).json({ error: err.message });
   }
 });
-
 
 // 8.5 Ein Item löschen
 app.delete("/items/:id", async (req, res) => {
@@ -348,8 +335,6 @@ app.get("/categories/:id/items", async (req, res) => {
   }
 });
   
-  
-
 // 9. Server starten
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);

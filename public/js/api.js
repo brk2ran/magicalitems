@@ -74,6 +74,7 @@ export async function deleteItem(itemId) {
   }
 }
 
+// Items suchen
 export async function searchItems({ search, minPrice, maxPrice, category_id }) {
   const params = [];
   if (search) params.push(`search=${encodeURIComponent(search)}`);

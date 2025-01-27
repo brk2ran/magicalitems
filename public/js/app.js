@@ -27,7 +27,6 @@ async function loadCategories() {
 }
 */
 
-
 // Funktion zum Laden der Items
 async function loadItems() {
   const itemsContainer = document.querySelector(".items-list");

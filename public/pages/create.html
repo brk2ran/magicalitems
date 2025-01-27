@@ -13,26 +13,20 @@
     <form id="create-item-form" enctype="multipart/form-data">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
-
       <label for="price">Preis:</label>
       <input type="number" id="price" name="price" step="0.01" required>
-
       <label for="mana">Mana:</label>
       <input type="number" id="mana" name="mana" required>
-
       <label for="description">Beschreibung:</label>
       <textarea id="description" name="description" required></textarea>
-
       <label for="category_id">Kategorie:</label>
       <select id="category_id" name="category_id" required>
         <option value="1">Waffen</option>
         <option value="2">Rüstungen</option>
         <option value="3">Tränke</option>
       </select>
-
       <label for="image">Bild:</label>
       <input type="file" id="image" name="image" accept="image/*">
-
       <button type="submit">Item erstellen</button>
     </form>
   </main>

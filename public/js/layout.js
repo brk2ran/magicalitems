@@ -1,5 +1,3 @@
-// public/js/layout.js
-
 function getBasePath() {
   const path = window.location.pathname;
   return path.includes("/pages/") ? "../components/" : "./components/";
