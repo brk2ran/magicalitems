@@ -38,8 +38,6 @@ async function fetchSearchResults() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', fetchSearchResults);
-
 document.getElementById('search-filter-form').addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -48,3 +46,6 @@ document.getElementById('search-filter-form').addEventListener('submit', (e) => 
 
     window.location.href = `/pages/search.html?${query}`;
 });
+
+document.addEventListener('DOMContentLoaded', fetchSearchResults);
+
