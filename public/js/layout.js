@@ -48,17 +48,20 @@ function initializeHeaderInteractions() {
           headerFilters.classList.add('visible');
       });
 
-      // Beim Fokus auf die Filter-Eingabefelder ebenfalls sichtbar halten
-      headerFilters.addEventListener('focusin', () => {
+      // Sicherstellen, dass Filter bei Interaktion sichtbar bleiben
+      headerFilters.addEventListener('mouseenter', () => {
           headerFilters.classList.remove('hidden');
           headerFilters.classList.add('visible');
       });
 
       // Beim Verlassen (blur) des Suchfelds oder der Filter-Eingabefelder ausblenden
-      const hideFilters = () => {
+      const hideFilters = (event) => {
           setTimeout(() => {
               // Überprüfen, ob weder das Suchfeld noch die Filter den Fokus haben
-              if (!searchInput.matches(':focus') && !headerFilters.matches(':focus-within')) {
+              if (
+                  !searchInput.matches(':focus') &&
+                  !headerFilters.matches(':hover')
+              ) {
                   headerFilters.classList.remove('visible');
                   headerFilters.classList.add('hidden');
               }
@@ -66,9 +69,10 @@ function initializeHeaderInteractions() {
       };
 
       searchInput.addEventListener('blur', hideFilters);
-      headerFilters.addEventListener('focusout', hideFilters);
+      headerFilters.addEventListener('mouseleave', hideFilters);
   }
 }
+
 
 
 // Beide Funktionen aufrufen

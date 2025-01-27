@@ -68,6 +68,7 @@ header .controls #add-item-btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     border-radius: 20px;
+    width: auto;
     background-color: transparent;
     color: white;
     text-transform: uppercase;
@@ -86,6 +87,8 @@ header .controls .search-bar {
     border: 2px solid white;
     border-radius: 20px;
     padding: 0.2rem 0.5rem;
+    flex: none; /* Verhindert, dass die Suchleiste Platz füllt */
+    width: auto; /* Passt sich dem Inhalt an */
 }
 
 header .controls .search-bar input {
@@ -94,8 +97,8 @@ header .controls .search-bar input {
     color: white;
     font-size: 0.9rem;
     padding: 0.5rem;
-    outline: none;
-    flex: 1;
+    outline: none; /* Entfernt blauen Fokusrahmen */
+    width: 200px;
 }
 
 header .controls .search-bar input::placeholder {
