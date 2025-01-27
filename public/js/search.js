@@ -1,54 +1,34 @@
-import { searchItems } from "./api.js";
+import { searchItems } from './api.js';
 
-document.getElementById("search-filter-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+async function fetchSearchResults() {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get('q'); // Suchparameter auslesen
 
-  // Formulardaten
-  const formData = new FormData(e.target);
-  const search = formData.get("search") || "";
-  const minPrice = formData.get("minPrice") || "";
-  const maxPrice = formData.get("maxPrice") || "";
-  const category_id = formData.get("category_id") || "";
+    const resultsContainer = document.getElementById('results-container');
+    resultsContainer.innerHTML = ''; // Ergebnisse leeren
 
-  try {
-    // Rufe unsere Funktion aus api.js auf
-    const items = await searchItems({ search, minPrice, maxPrice, category_id });
+    if (!search) {
+        resultsContainer.innerHTML = '<p>Bitte geben Sie einen Suchbegriff ein.</p>';
+        return;
+    }
 
-    renderSearchResults(items);
-  } catch (error) {
-    console.error("Fehler beim Laden der Suchergebnisse:", error);
-    const container = document.getElementById("search-results");
-    container.innerHTML = "<p>Fehler beim Laden der Items.</p>";
-  }
-});
+    try {
+        const items = await searchItems({ search }); // Nur Suchparameter übergeben
 
-function renderSearchResults(items) {
-  const container = document.getElementById("search-results");
-  container.innerHTML = "";
-
-  if (!items || items.length === 0) {
-    container.innerHTML = "<p>Keine passenden Items gefunden.</p>";
-    return;
-  }
-
-  // Einfacher Loop, kannst du nach Belieben stylen oder layouten
-  items.forEach((item) => {
-    const itemDiv = document.createElement("div");
-    itemDiv.classList.add("item"); // CSS-Klasse
-
-    // Zeige Bild, wenn vorhanden
-    const imgHTML = item.image
-      ? `<img src="${item.image}" alt="${item.name}" style="max-width: 150px;">`
-      : "";
-
-    itemDiv.innerHTML = `
-      <h3>${item.name}</h3>
-      <p>Preis: ${item.price}</p>
-      <p>Mana: ${item.mana}</p>
-      <p>${item.description}</p>
-      ${imgHTML}
-    `;
-
-    container.appendChild(itemDiv);
-  });
+        resultsContainer.innerHTML = items.length === 0
+            ? '<p>Keine Ergebnisse gefunden.</p>'
+            : items.map(item => `
+                <div class="item-card">
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>Preis: ${item.price}</p>
+                    <a href="/frontend/categories/detail.html?id=${item.id}" class="details-btn">Details ansehen</a>
+                </div>
+            `).join('');
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Suchergebnisse:', err);
+        resultsContainer.innerHTML = '<p>Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</p>';
+    }
 }
+
+document.addEventListener('DOMContentLoaded', fetchSearchResults);
