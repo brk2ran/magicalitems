@@ -1,4 +1,6 @@
 import { searchItems } from './api.js';
+const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
+
 
 async function fetchSearchResults() {
     const params = new URLSearchParams(window.location.search);
@@ -22,7 +24,7 @@ async function fetchSearchResults() {
             ? '<p>Keine Ergebnisse gefunden.</p>'
             : items.map(item => `
                 <div class="item-card">
-                    <img src="${item.image}" alt="${item.name}">
+                    <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}">
                     <h3>${item.name}</h3>
                     <p>Preis: ${item.price}</p>
                     <a href="/public/pages/detail.html?id=${item.id}" class="details-btn">Details ansehen</a>
