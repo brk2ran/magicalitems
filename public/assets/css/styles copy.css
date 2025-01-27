@@ -1,0 +1,596 @@
+/* --- Globale Einstellungen --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+/* --- Header und Footer --- */
+header, footer {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem; /* Abstand zwischen Gruppen */
+}
+
+header nav ul {
+    list-style: none;
+    flex: 1; /* Tabs nehmen den freien Platz ein */
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Abstand zwischen Tabs */
+}
+
+header nav ul li a {
+    border: 2px solid white; /* Weißer Rand */
+    border-radius: 20px; /* Abgerundete Ecken */
+    padding: 0.5rem 1rem;
+    text-decoration: none; /* Unterstreichung entfernen */
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #555; /* Hintergrund beim Hover */
+    border-color: #ccc; /* Hellere Rahmenfarbe */
+}
+
+header .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Abstand zwischen Suche und Button */
+    flex-wrap: wrap; /* Elemente umbrechen, falls nötig */
+}
+
+header .controls #add-item-btn {
+    flex: none;
+    border: 2px solid white;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    width: auto;
+    background-color: transparent;
+    color: white;
+    text-transform: uppercase;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+header .controls #add-item-btn:hover {
+    background-color: #555;
+    border-color: #ccc;
+}
+
+header .controls .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 0.2rem 0.5rem;
+    flex: none; /* Verhindert, dass die Suchleiste Platz füllt */
+    width: auto; /* Passt sich dem Inhalt an */
+}
+
+header .controls .search-bar input {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    outline: none; /* Entfernt blauen Fokusrahmen */
+    width: 200px;
+}
+
+header .controls .search-bar input::placeholder {
+    color: #ccc;
+}
+
+/* --- Hauptbereich --- */
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* --- Grid-Layout für Items --- */
+:root {
+    --min-card-width: 300px;
+}
+
+.items-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.item-card, .detail-container .item-card, .search-result-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
+    transition: transform 0.3s ease;
+}
+
+.item-card:hover, .detail-container .item-card:hover, .search-result-card:hover {
+    /*transform: translateY(-5px);*/
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+.item-card img, .detail-container .item-card img, .search-result-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column; /* Layout in Spaltenrichtung */
+    align-items: flex-start; /* Elemente links ausrichten */
+    position: relative; /* Für absolute Positionierung der Filter */
+}
+
+.search-bar input[type="text"] {
+    margin-bottom: 8px; /* Abstand zum Filter */
+    width: 100%; /* Volle Breite nutzen */
+}
+
+.search-bar button {
+    padding: 5px 10px; /* Kompaktere Buttons */
+    font-size: 16px;
+}
+
+#add-item-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+}
+
+/* Sichtbar machen */
+#header-filters {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+#header-filters.visible {
+    display: block;
+}
+
+
+/* Standardmäßig verstecken */
+#header-filters.hidden {
+    display: none; /* Versteckt, wenn nicht aktiv */
+}
+
+/* --- Detailseite --- */
+/* Container für die Detailansicht */
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 2px;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Bild-Einstellungen */
+.detail-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Text unter dem Bild */
+.detail-container h3,
+.detail-container p {
+    margin: 10px 0;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Abstand zwischen Buttons */
+    margin-top: 10px; /* Abstand zum oberen Inhalt */
+}
+
+.edit-btn, .delete-btn {
+    font-family: 'Cinzel Decorative', serif;    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+.details-btn {
+    display: block;
+    margin: 0 auto; /* Zentrieren des Details-Buttons */
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.details-btn:hover {
+    background-color: #23272b;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+/* Anpassung für die .form-row */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Abstand zwischen den Eingabefeldern */
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1; /* Felder gleichmäßig verteilen */
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+button:hover {
+    background-color: #555;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+/* Zusätzliche Stile */
+label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+input, select, textarea {
+    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+/* Kontaktformular */
+form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical; /* Benutzer kann die Höhe des Textfeldes ändern */
+}
+
+button {
+    font-family: 'Cinzel Decorative', serif;
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #333;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Impressum-Seite */
+.impressum-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.impressum-content p {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.impressum-content strong {
+    font-weight: bold;
+    color: #000;
+}
+
+
+/* --- Responsives Design --- */
+
+/* Allgemeine Tablet-Ansicht (maximal 768px) */
+/*
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center; 
+    }
+
+    header nav ul li a, #add-item-btn {
+        font-size: 14px;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .search-bar {
+        flex-direction: column; 
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    .items-list {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .item-card img {
+        height: 150px;
+    }
+}*/
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Kleinere Schriftgröße */
+    }
+
+    header {
+        flex-direction: column; /* Elemente vertikal anordnen */
+        align-items: center; /* Zentrierung */
+    }
+
+    header .logo h1 {
+        font-size: 24px; /* Kleinere Schriftgröße für Logo */
+        margin-bottom: 10px;
+    }
+
+    header nav ul {
+        flex-wrap: wrap; /* Tabs umbrechen */
+        justify-content: center;
+    }
+
+    header .controls {
+        width: 100%; /* Volle Breite */
+        justify-content: space-between;
+    }
+
+    header .controls .search-bar {
+        flex: none;
+        max-width: 70%; /* Begrenzte Breite */
+    }
+
+    header .controls #add-item-btn {
+        flex: none;
+        width: auto;
+        text-align: center; /* Zentrierter Text */
+    }
+}
+
+/* Smartphone-Ansicht (maximal 480px) */
+/*
+@media screen and (max-width: 480px) {
+    header {
+        padding: 0.5rem; 
+    }
+
+    header .logo h1 {
+        font-size: 18px; 
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .search-bar {
+        gap: 5px;
+    }
+
+    .search-bar input, .search-bar button {
+        font-size: 14px;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .items-list {
+        grid-template-columns: 1fr; 
+        gap: 0.5rem;
+    }
+
+    .item-card {
+        padding: 0.8rem;
+    }
+
+    .item-card img {
+        height: 120px; 
+    }
+
+    .back-button a {
+        padding: 8px 12px; 
+        font-size: 14px;
+    }
+
+    footer {
+        font-size: 12px; 
+    }
+}*/
+
+@media screen and (max-width: 480px) {
+    header {
+        padding: 0.5rem;
+    }
+
+    header .logo h1 {
+        font-size: 18px; /* Kleinere Schriftgröße */
+    }
+
+    header nav ul {
+        flex-direction: column; /* Tabs untereinander */
+        gap: 5px;
+    }
+
+    header .controls {
+        flex-direction: column; /* Suchleiste und Button stapeln */
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    header .controls .search-bar {
+        width: 100%;
+    }
+
+    header .controls #add-item-btn {
+        width: 100%; /* Button über volle Breite */
+        text-align: center;
+    }
+
+    header .controls .search-bar input {
+        font-size: 14px;
+        padding: 0.3rem 0.6rem;
+    }
+}
