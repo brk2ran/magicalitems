@@ -103,10 +103,10 @@ header .controls .search-bar input[type="text"] {
     color: white;
     font-size: 0.9rem; /* Gleiche Schriftgröße wie der Button */
     text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
-    padding: 0.5rem 1rem;
+    padding: 0;
     outline: none; /* Entfernt blauen Fokusrahmen */
     width: auto; /* Passt sich dem Inhalt an */
-    margin-bottom: 4px; /* Abstand zum Filter */
+    margin-bottom: 3px; /* Abstand zum Filter */
 }
 
 header .controls .search-bar input::placeholder {
