@@ -55,7 +55,7 @@ header nav ul li a, #add-item-btn {
 
 header nav ul li a.active {
     background-color: #4a4a4a; /* Beispiel: Gelber Hintergrund */
-    color: #ffffff; /* Dunklere Schriftfarbe */
+    color: #fff; /* Dunklere Schriftfarbe */
 }
 
 
@@ -71,6 +71,8 @@ header nav ul li a.active {
 
 header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
     background-color: #333;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 .back-btn {
@@ -86,12 +88,14 @@ header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
     background-color: #333;
     text-decoration: none;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 20%);
     transition: background-color 0.3s;
 }
 
 .back-btn a:hover {
     background-color: #555;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 
@@ -112,10 +116,14 @@ h2 {
     font-size: 28px;
 }
 
+:root {
+    --min-card-width: 300px;
+}
+
 /* --- Grid-Layout für Items --- */
 .items-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -126,12 +134,14 @@ h2 {
     border-radius: 8px;
     padding: 1rem;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
     transition: transform 0.3s ease;
 }
 
 .item-card:hover, .detail-container .item-card:hover, .search-result-card:hover {
-    transform: translateY(-5px);
+    /*transform: translateY(-5px);*/
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 .item-card img, .detail-container .item-card img, .search-result-card img {
@@ -143,25 +153,12 @@ h2 {
 }
 
 .search-bar {
-    background-color: transparent;
-    border: none;
-    display: flex; /* Horizontale Anordnung */
-    gap: 5px; /* Abstand zwischen den Elementen */
-    align-items: center; /* Vertikale Ausrichtung */
-    justify-content: flex-end; /* Rechtsbündige Ausrichtung */
-}
-
-.search-bar {
     display: flex;
     flex-direction: column; /* Layout in Spaltenrichtung */
     align-items: flex-start; /* Elemente links ausrichten */
     position: relative; /* Für absolute Positionierung der Filter */
 }
 
-.search-bar input {
-    width: 120px; /* Kleinere Breite */
-    font-size: 16px;
-}
 .search-bar input[type="text"] {
     margin-bottom: 8px; /* Abstand zum Filter */
     width: 100%; /* Volle Breite nutzen */
@@ -254,10 +251,14 @@ h2 {
 
 .edit-btn:hover {
     background-color: #218838;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
     background-color: #c82333;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 .details-btn {
@@ -273,6 +274,8 @@ h2 {
 
 .details-btn:hover {
     background-color: #23272b;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 /* Anpassung für die .form-row */
@@ -309,6 +312,8 @@ button {
 
 button:hover {
     background-color: #555;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 /* Zusätzliche Stile */
@@ -334,7 +339,7 @@ form {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
 }
 
 .form-group {
@@ -377,6 +382,8 @@ button {
 
 button:hover {
     background-color: #333;
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    transition: all 0.3s ease;
 }
 
 #map {
@@ -395,7 +402,7 @@ button:hover {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
     font-size: 1rem;
     line-height: 1.6;
 }
