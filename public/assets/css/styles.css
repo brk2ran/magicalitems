@@ -31,71 +31,56 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-header .logo h1 {
-    font-size: 30px;
+    gap: 1rem; /* Abstand zwischen Gruppen */
 }
 
 header nav ul {
-    list-style: none;
+    flex: 1; /* Tabs nehmen den freien Platz ein */
     display: flex;
-    gap: 5px;
+    justify-content: center;
+    gap: 1rem; /* Abstand zwischen Tabs */
 }
 
-header nav ul li a, #add-item-btn {
-    font-family: 'Cinzel Decorative', serif;
-    text-decoration: none;
+header .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Abstand zwischen Suche und Button */
+}
+
+header .controls #add-item-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    background-color: #444;
     color: white;
-    font-weight: bold;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
+    text-transform: uppercase;
     transition: background-color 0.3s;
 }
 
-header nav ul li a.active {
-    background-color: #4a4a4a; /* Beispiel: Gelber Hintergrund */
-    color: #fff; /* Dunklere Schriftfarbe */
-}
-
-
-.details-btn{
-    background-color: #333;
-    border-radius: 1px;
-    padding: 5px 10px;
-    font-size: 16px;
-    text-decoration: none;
-    color: white;
-    transition: background-color 0.3s;
-}
-
-header nav ul li a:hover, .details-btn:hover, #add-item-btn:hover {
-    background-color: #333;
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
-}
-
-.back-btn {
-    margin-top: 20px; /* Abstand zur Karte */
-    text-align: center; /* Button zentrieren */
-}
-
-.back-btn a {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #333;
-    text-decoration: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgb(0, 0, 0, 20%);
-    transition: background-color 0.3s;
-}
-
-.back-btn a:hover {
+header .controls #add-item-btn:hover {
     background-color: #555;
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
+}
+
+header .controls .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #444;
+    border-radius: 20px;
+    padding: 0.2rem 0.5rem;
+}
+
+header .controls .search-bar input {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    outline: none;
+    flex: 1;
+}
+
+header .controls .search-bar input::placeholder {
+    color: #ccc;
 }
 
 
@@ -176,20 +161,29 @@ h2 {
 
 /* Sichtbar machen */
 #header-filters {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-wrap: wrap; /* Filter in mehrere Zeilen umbrechen, falls nötig */
-    gap: 8px; /* Abstand zwischen den Filtern */
-    margin-top: 8px; /* Platz nach dem Suchfeld */
-    opacity: 0; /* Unsichtbar, wenn nicht aktiv */
-    transform: translateY(-10px); /* Leicht nach oben verschoben */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Animation */
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 200px;
+    z-index: 100;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Animation bei Sichtbarkeit */
 #header-filters.visible {
     opacity: 1;
-    transform: translateY(0); /* Zurück in die normale Position */
+    transform: scale(1);
 }
+
 
 /* Standardmäßig verstecken */
 #header-filters.hidden {

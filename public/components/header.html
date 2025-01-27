@@ -12,13 +12,14 @@
             <li><a href="../impressum.html">Impressum</a></li>
         </ul>
     </nav>
-    <div class="search-bar">
-        <button id="add-item-btn" class="new-item-btn" onclick="window.location.href='../pages/create.html'">+ Neues Item</button>
+    <div class="controls">
+        <button id="add-item-btn" onclick="window.location.href='../pages/create.html'">+ Neues Item</button>
         <form id="search-form" action="../pages/search.html" method="get" class="search-bar">
             <input id="search-input" type="text" name="q" placeholder="Suche ..." />
             <div id="header-filters" class="hidden">
                 <input id="minPrice" type="number" name="minPrice" placeholder="min Gold" />
                 <input id="maxPrice" type="number" name="maxPrice" placeholder="max Gold" />
             </div>
-    </div> 
+        </form>
+    </div>
 </header>
