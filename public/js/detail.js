@@ -28,8 +28,9 @@ async function loadItemDetails() {
             <div class="item-detail-container">
                 <div class="item-detail-image">
                     <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}">
-                <div class="back-btn">
-                    <a href="#" id="back-link">Zurück zur Kategorie</a>
+                    <div class="back-btn">
+                        <a href="#" id="back-link">Zurück zur Kategorie</a>
+                    </div>
                 </div>
             </div>
             <div class="item-detail-attributes">
