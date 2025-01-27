@@ -247,76 +247,69 @@ h2 {
     transform: scale(1.05); /* Leichte Vergrößerung */
     transition: all 0.3s ease;
 }
-
 .item-detail-wrapper {
-    max-width: 800px; /* Begrenzt die Breite des Containers */
-    margin: 20px auto; /* Zentriert den Container */
+    max-width: 1000px; /* Begrenzt die Gesamtbreite */
+    margin: 20px auto; /* Zentriert den Wrapper */
     padding: 20px;
-    border: 1px solid #ddd; /* Rahmen um den Container */
+    border: 1px solid #ddd; /* Rahmen um den Wrapper */
     border-radius: 10px; /* Abgerundete Ecken */
     background-color: #fff; /* Weißer Hintergrund */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sanfter Schatten */
   }
-
-.item-detail-container {
-    display: flex;
-    flex-wrap: wrap;
+  
+  .item-detail-container {
+    display: flex; /* Bild und Attribute nebeneinander */
+    flex-wrap: nowrap; /* Keine Umbrüche, um sie nebeneinander zu halten */
     align-items: flex-start;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    gap: 20px; /* Abstand zwischen Bild und Attributen */
   }
-
+  
   .item-detail-image {
-    flex: 1;
-    max-width: 300px;
-    text-align: center; /* Zentriert den Button unter dem Bild */
+    flex: 1; /* Das Bild nimmt minimalen Platz ein */
+    max-width: 300px; /* Breite des Bildcontainers begrenzen */
   }
   
   .item-detail-image img {
     width: 100%;
-    max-width: 300px; /* Maximale Breite des Bildes */
-    height: auto; /* Beibehaltung des Seitenverhältnisses */
-    object-fit: contain; /* Verhindert Verzerrungen */
-    border-radius: 8px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px; /* Abgerundete Kanten für das Bild */
   }
   
   .item-detail-attributes {
-    flex: 2;
+    flex: 2; /* Attribute nehmen mehr Platz ein */
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 10px; /* Abstand zwischen den Attributen */
+  }
+  
+  .back-btn {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .back-btn a {
+    display: inline-block;
+    color: #fff;
+    background-color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #333;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .back-btn a:hover {
+    background-color: #555;
   }
   
   .item-detail-attributes h3 {
     font-size: 24px;
-    margin: 0; /* Entfernt unnötigen Abstand */
-    text-align: left; /* Macht die Positionierung näher am Bild */
+    margin: 0;
+    text-align: left;
   }
   
-  .item-detail-attributes p {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-  
-  .back-btn a {
-    display: block;
-    margin: 0 auto;
-    color: #000;
-    text-decoration: none;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #000;
-    padding: 10px 15px;
-    border-radius: 4px;
-  }
-  
-  .back-btn a:hover {
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    transition: all 0.3s ease;
-  }
-
 
 /* Zusätzliche Stile */
 label {
