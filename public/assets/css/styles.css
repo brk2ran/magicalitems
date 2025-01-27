@@ -151,9 +151,20 @@ h2 {
     justify-content: flex-end; /* Rechtsbündige Ausrichtung */
 }
 
+.search-bar {
+    display: flex;
+    flex-direction: column; /* Layout in Spaltenrichtung */
+    align-items: flex-start; /* Elemente links ausrichten */
+    position: relative; /* Für absolute Positionierung der Filter */
+}
+
 .search-bar input {
     width: 120px; /* Kleinere Breite */
     font-size: 16px;
+}
+.search-bar input[type="text"] {
+    margin-bottom: 8px; /* Abstand zum Filter */
+    width: 100%; /* Volle Breite nutzen */
 }
 
 .search-bar button {
@@ -164,6 +175,28 @@ h2 {
 #add-item-btn {
     padding: 0.5rem 1rem;
     border-radius: 100px;
+}
+
+/* Sichtbar machen */
+#header-filters {
+    display: flex;
+    flex-wrap: wrap; /* Filter in mehrere Zeilen umbrechen, falls nötig */
+    gap: 8px; /* Abstand zwischen den Filtern */
+    margin-top: 8px; /* Platz nach dem Suchfeld */
+    opacity: 0; /* Unsichtbar, wenn nicht aktiv */
+    transform: translateY(-10px); /* Leicht nach oben verschoben */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Animation */
+}
+
+/* Animation bei Sichtbarkeit */
+#header-filters.visible {
+    opacity: 1;
+    transform: translateY(0); /* Zurück in die normale Position */
+}
+
+/* Standardmäßig verstecken */
+#header-filters.hidden {
+    display: none; /* Versteckt, wenn nicht aktiv */
 }
 
 /* --- Detailseite --- */
@@ -290,8 +323,6 @@ input, select, textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-
 
 /* Kontaktformular */
 form {
@@ -478,23 +509,3 @@ button:hover {
     }
 }
 
-/* Standardmäßig ausgeblendet */
-#header-filters.hidden {
-    display: none;
-}
-
-/* Sichtbar machen */
-#header-filters {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-/* Animation bei Sichtbarkeit */
-#header-filters.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
