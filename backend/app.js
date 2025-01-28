@@ -112,6 +112,7 @@ app.get("/", (req, res) => {
 });
 
 // 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie, Suche, Preis)
+/*
 app.get("/items", async (req, res) => {
   const { category_id, search, minPrice, maxPrice } = req.query;
 
@@ -156,6 +157,58 @@ app.get("/items", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+*/
+
+
+app.get("/items", async (req, res) => {
+  const { category_id, search, minPrice, maxPrice } = req.query;
+
+  let query = "SELECT * FROM items WHERE 1=1";
+  const values = [];
+
+  // Falls ein Kategoriename in der Suche ist, holen wir uns die category_id
+  let categoryId = null;
+  if (search) {
+      const categoryResult = await pool.query(
+          "SELECT id FROM categories WHERE LOWER(name) = LOWER($1) LIMIT 1",
+          [search]
+      );
+      if (categoryResult.rows.length > 0) {
+          categoryId = categoryResult.rows[0].id;
+      }
+  }
+
+  // Falls ein category_id übergeben wurde oder über den Namen gefunden wurde
+  if (category_id || categoryId) {
+      query += ` AND category_id = $${values.length + 1}`;
+      values.push(category_id || categoryId);
+  }
+
+  // Falls ein allgemeiner Suchbegriff da ist, aber keine Kategorie
+  if (search && !categoryId) {
+      query += ` AND (name ILIKE $${values.length + 1} OR description ILIKE $${values.length + 1})`;
+      values.push(`%${search}%`);
+  }
+
+  // Preis-Filter
+  if (minPrice) {
+      query += ` AND price >= $${values.length + 1}`;
+      values.push(minPrice);
+  }
+  if (maxPrice) {
+      query += ` AND price <= $${values.length + 1}`;
+      values.push(maxPrice);
+  }
+
+  try {
+      const result = await pool.query(query, values);
+      res.status(200).json(result.rows);
+  } catch (err) {
+      console.error("Fehler in GET /items:", err.message);
+      res.status(500).json({ error: err.message });
+  }
+});
+
 
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
