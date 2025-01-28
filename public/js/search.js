@@ -37,18 +37,28 @@ async function fetchSearchResults() {
     }
 }
 
-// Trigger search on Enter or submit
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded ausgelöst"); // Überprüfen, ob das Skript läuft
+
     fetchSearchResults();
 
     const form = document.getElementById('search-form');
     if (form) {
+        console.log("Formular gefunden:", form); // Prüfen, ob das Formular existiert
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            console.log("Formular-Submit ausgelöst"); // Prüfen, ob der Event-Listener greift
+
             const formData = new FormData(form);
             const query = new URLSearchParams(formData).toString();
+            console.log("Query-String:", query); // Sicherstellen, dass der Query-String korrekt ist
+
             window.location.href = `/pages/search.html?${query}`;
         });
+    } else {
+        console.error("Formular nicht gefunden!");
     }
 });
+
 
