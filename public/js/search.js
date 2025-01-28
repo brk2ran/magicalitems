@@ -42,9 +42,7 @@ function displayResults(items) {
 
   resultsContainer.innerHTML = items.map(item => `
     <div class="item-card">
-      <img src="${BASE_BACKEND_URL}${item.image}" 
-           alt="${item.name}"
-           onerror="this.src='${BASE_BACKEND_URL}/uploads/placeholder.jpg'">
+      <img src="${BASE_BACKEND_URL}${item.image}" alt="${item.name}" onerror="this.src='${BASE_BACKEND_URL}/uploads/placeholder.jpg'">
       <h3>${item.name}</h3>
       <p class="price">${item.price} Gold</p>
       <p class="mana">${item.mana} Mana</p>
