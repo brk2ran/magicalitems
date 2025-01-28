@@ -45,8 +45,8 @@ async function loadItemDetails() {
         const backLink = document.getElementById("back-link");
         const categoryPath =
             item.category_id === 1 ? "weapons.html" :
-            item.category_id === 2 ? "potions.html" :
-            "armors.html";
+            item.category_id === 2 ? "armors.html"  :
+            item.category_id === 3 ? "potions.html" :
         backLink.href = `/pages/${categoryPath}`;
     } catch (error) {
         console.error("Fehler beim Laden der Item-Details:", error);
