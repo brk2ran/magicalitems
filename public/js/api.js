@@ -57,6 +57,7 @@ export async function updateItem(itemId, itemData) {
 }
 
 // Item löschen
+/*
 export async function deleteItem(itemId) {
   try {
     const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
@@ -72,6 +73,10 @@ export async function deleteItem(itemId) {
     console.error("Fehler in deleteItem:", error.message);
     throw error; // Fehler weiterwerfen, falls die aufrufende Funktion ihn behandeln möchte
   }
+}*/
+
+export async function deleteItem(itemId) {
+  return fetchData(`/items/${itemId}`, { method: "DELETE" });
 }
 
 // Items suchen
