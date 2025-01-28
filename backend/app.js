@@ -112,54 +112,6 @@ app.get("/", (req, res) => {
 });
 
 // 8.1 Alle Items abrufen (mit optionaler Filterung nach Kategorie, Suche, Preis)
-/*
-app.get("/items", async (req, res) => {
-  const { category_id, search, minPrice, maxPrice } = req.query;
-
-  // Add validation for price ranges
-  if (minPrice && isNaN(minPrice)) {
-    return res.status(400).json({ error: "Ungültiger Mindestpreis" });
-  }
-  if (maxPrice && isNaN(maxPrice)) {
-    return res.status(400).json({ error: "Ungültiger Höchstpreis" });
-  }
-
-  let query = "SELECT * FROM items WHERE 1=1";
-  const values = [];
-
-  // Kategorie-Filter
-  if (category_id) {
-    query += ` AND category_id = $${values.length + 1}`;
-    values.push(category_id);
-  }
-
-  // Volltextsuche
-  if (search) {
-    query += ` AND (name ILIKE $${values.length + 1} OR description ILIKE $${values.length + 1})`;
-    values.push(`%${search}%`);
-  }
-
-  // Preisbereich
-  if (minPrice) {
-    query += ` AND price >= $${values.length + 1}`;
-    values.push(minPrice);
-  }
-  if (maxPrice) {
-    query += ` AND price <= $${values.length + 1}`;
-    values.push(maxPrice);
-  }
-
-  try {
-    const result = await pool.query(query, values);
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error("Fehler in GET /items:", err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-*/
-
-
 app.get("/items", async (req, res) => {
   const { category_id, search, minPrice, maxPrice } = req.query;
 
@@ -298,6 +250,7 @@ app.delete("/items/:id", async (req, res) => {
   }
 });
 
+/*
 // CRUD-Operationen für Kategorien
 
 // 8.6 Alle Kategorien abrufen
@@ -394,7 +347,7 @@ app.get("/categories/:id/items", async (req, res) => {
     console.error("Fehler in GET /categories/${id}/items:", err.message);
     res.status(500).json({ error: err.message });
   }
-});
+});*/
   
 // 9. Server starten
 app.listen(PORT, () => {
