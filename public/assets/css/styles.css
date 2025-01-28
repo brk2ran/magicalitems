@@ -157,6 +157,20 @@ footer {
     display: none; /* Versteckt, wenn nicht aktiv */
 }
 
+#search-header {
+    display: flex;
+    justify-content: space-between; /* Titel links, Filter rechts */
+    align-items: center; /* Gleiche Höhe für beide Elemente */
+    margin-bottom: 1rem;
+    flex-wrap: wrap; /* Falls der Bildschirm zu klein ist */
+}
+
+#search-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    flex: 1; /* Hält den Titel auf der linken Seite */
+}
+
 #additional-filters {
     display: flex;
     justify-content: center; /* Zentriert Filter in der Mitte */
@@ -384,6 +398,7 @@ input, select, textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    color: #333;
 }
 
 /* Kontaktformular */

@@ -10,10 +10,11 @@
 <body>
     <div id="header"></div>
     <main>
-        <h1>Suche & Filter</h1>
+      <div id="search-header">
+        <h1>Sucheergebnisse & Filter</h1>
         <section id="additional-filters">
           <form id="additional-filter-form">
-              <label for="mana">Mana (max):</label>
+              <label for="mana">Mana:</label>
               <input type="number" id="mana" name="mana" placeholder="maxMana" />
   
               <label for="category_id">Kategorie:</label>
@@ -26,7 +27,8 @@
   
               <button type="submit">Filter anwenden</button>
           </form>
-      </section>
+        </section>
+      </div>
       <div id="results-container" class="items-list"></div>
     </main>
   <div id="footer"></div>
