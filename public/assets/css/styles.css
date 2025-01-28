@@ -19,8 +19,7 @@ body {
     background-position: center; /* Bild mittig ausrichten */
     background-attachment: fixed; /* Bleibt beim Scrollen fest */
     background-repeat: no-repeat; /* Kein Wiederholen des Musters */
-    color: white; /* Falls notwendig für bessere Lesbarkeit */
-    
+    color: white; /* Falls notwendig für bessere Lesbarkeit */  
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -254,6 +253,7 @@ h2 {
     grid-template-columns: repeat(auto-fit, minmax(var(--min-card-width), 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    color: #333;
 }
 
 .item-card {
@@ -423,6 +423,7 @@ form {
     padding: 1rem;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
+    color: #333;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 10%);
 }
