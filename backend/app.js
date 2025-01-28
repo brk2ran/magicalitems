@@ -115,6 +115,14 @@ app.get("/", (req, res) => {
 app.get("/items", async (req, res) => {
   const { category_id, search, minPrice, maxPrice } = req.query;
 
+  // Add validation for price ranges
+  if (minPrice && isNaN(minPrice)) {
+    return res.status(400).json({ error: "Ungültiger Mindestpreis" });
+  }
+  if (maxPrice && isNaN(maxPrice)) {
+    return res.status(400).json({ error: "Ungültiger Höchstpreis" });
+  }
+
   let query = "SELECT * FROM items WHERE 1=1";
   const values = [];
 
@@ -124,7 +132,7 @@ app.get("/items", async (req, res) => {
     values.push(category_id);
   }
 
-  // Volltextsuche (einfacher Ansatz via ILIKE)
+  // Volltextsuche
   if (search) {
     query += ` AND (name ILIKE $${values.length + 1} OR description ILIKE $${values.length + 1})`;
     values.push(`%${search}%`);

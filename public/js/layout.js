@@ -38,41 +38,44 @@ async function loadFooter() {
 }
 
 // Initialisiere Header-Interaktionen
+
 function initializeHeaderInteractions() {
   const searchInput = document.getElementById('search-input');
   const headerFilters = document.getElementById('header-filters');
+  const form = document.getElementById('search-form');
 
+  // Existing focus/blur handling
   if (searchInput && headerFilters) {
-      // Beim Fokus das Filterfeld anzeigen
-      searchInput.addEventListener('focus', () => {
-          headerFilters.classList.remove('hidden');
-          headerFilters.classList.add('visible');
-      });
+    searchInput.addEventListener('focus', () => {
+      headerFilters.classList.remove('hidden');
+      headerFilters.classList.add('visible');
+    });
 
-      // Sicherstellen, dass Filter bei Interaktion sichtbar bleiben
-      headerFilters.addEventListener('mouseenter', () => {
-          headerFilters.classList.remove('hidden');
-          headerFilters.classList.add('visible');
-      });
+    const hideFilters = (event) => {
+      setTimeout(() => {
+        if (!searchInput.matches(':focus') && !headerFilters.matches(':hover')) {
+          headerFilters.classList.remove('visible');
+          headerFilters.classList.add('hidden');
+        }
+      }, 200);
+    };
 
-      // Beim Verlassen (blur) des Suchfelds oder der Filter-Eingabefelder ausblenden
-      const hideFilters = (event) => {
-          setTimeout(() => {
-              // Überprüfen, ob weder das Suchfeld noch die Filter den Fokus haben
-              if (
-                  !searchInput.matches(':focus') &&
-                  !headerFilters.matches(':hover')
-              ) {
-                  headerFilters.classList.remove('visible');
-                  headerFilters.classList.add('hidden');
-              }
-          }, 200); // Kurze Verzögerung, um Klicks auf die Filterfelder zu erlauben
-      };
+    searchInput.addEventListener('blur', hideFilters);
+    headerFilters.addEventListener('mouseleave', hideFilters);
+  }
 
-      searchInput.addEventListener('blur', hideFilters);
-      headerFilters.addEventListener('mouseleave', hideFilters);
+  // Simplified form handling
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const query = new URLSearchParams(formData).toString();
+      window.location.href = `/pages/search.html?${query}`;
+      return false;
+    };
   }
 }
+
 
 // Beide Funktionen aufrufen, Suche fixen!
 document.addEventListener("DOMContentLoaded", () => {

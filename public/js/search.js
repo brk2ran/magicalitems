@@ -1,64 +1,66 @@
 import { searchItems } from './api.js';
-const BASE_BACKEND_URL = "https://magicalitems.onrender.com"; // Basis-URL des Backends
 
+const BASE_BACKEND_URL = "https://magicalitems.onrender.com";
 
-async function fetchSearchResults() {
-    const params = new URLSearchParams(window.location.search);
-    const search = params.get('q');
-    const minPrice = params.get('minPrice');
-    const maxPrice = params.get('maxPrice');
-    const category_id = params.get('category_id');
+async function fetchAndDisplayResults() {
+  const params = new URLSearchParams(window.location.search);
+  const searchParams = {
+    search: params.get('search'),
+    minPrice: params.get('minPrice'),
+    maxPrice: params.get('maxPrice'),
+    category_id: params.get('category_id')
+  };
 
-    const resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = ''; // Clear previous results
+  const resultsContainer = document.getElementById('results-container');
+  resultsContainer.innerHTML = '<div class="loading">Suche läuft...</div>';
 
-    if (!search && !minPrice && !maxPrice && !category_id) {
-        resultsContainer.innerHTML = '<p>Bitte geben Sie einen Suchbegriff ein oder setzen Sie Filter.</p>';
-        return;
-    }
-
-    try {
-        const items = await searchItems({ search, minPrice, maxPrice, category_id });
-        resultsContainer.innerHTML = items.length === 0
-            ? '<p>Keine Ergebnisse gefunden.</p>'
-            : items.map(item => `
-              <div class="item-card">
-                <img src="https://magicalitems.onrender.com${item.image}" alt="${item.name}" />
-                <h3><strong>${item.name}</strong></h3>
-                <p><strong>Preis:</strong> ${item.price}</p>
-                <p><strong>Mana:</strong> ${item.mana}</p>
-                <p><strong>Beschreibung:</strong> ${item.description}</p>
-                <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
-              </div>
-            `).join('');
-    } catch (err) {
-        console.error('Fehler beim Abrufen der Suchergebnisse:', err);
-        resultsContainer.innerHTML = '<p>Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</p>';
-    }
+  try {
+    const items = await searchItems(searchParams);
+    displayResults(items);
+  } catch (error) {
+    resultsContainer.innerHTML = `
+      <div class="error">
+        <p>Fehler bei der Suche: ${error.message}</p>
+        <button onclick="window.location.reload()">Erneut versuchen</button>
+      </div>
+    `;
+  }
 }
 
+function displayResults(items) {
+  const resultsContainer = document.getElementById('results-container');
+  
+  if (!items || items.length === 0) {
+    resultsContainer.innerHTML = `
+      <div class="no-results">
+        <p>Keine Items gefunden</p>
+        <button onclick="window.location.href='/index.html'">Zurück zur Startseite</button>
+      </div>
+    `;
+    return;
+  }
+
+  resultsContainer.innerHTML = items.map(item => `
+    <div class="item-card">
+      <img src="${BASE_BACKEND_URL}${item.image}" 
+           alt="${item.name}"
+           onerror="this.src='${BASE_BACKEND_URL}/uploads/placeholder.jpg'">
+      <h3>${item.name}</h3>
+      <p class="price">${item.price} Gold</p>
+      <p class="mana">${item.mana} Mana</p>
+      <div class="description">${item.description}</div>
+      <a href="./detail.html?id=${item.id}" class="details-btn">Details</a>
+    </div>
+  `).join('');
+}
+
+// Initialize search when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOMContentLoaded ausgelöst"); // Überprüfen, ob das Skript läuft
-
-    fetchSearchResults();
-
-    const form = document.getElementById('search-form');
-    if (form) {
-        console.log("Formular gefunden:", form); // Prüfen, ob das Formular existiert
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log("Formular-Submit ausgelöst"); // Prüfen, ob der Event-Listener greift
-
-            const formData = new FormData(form);
-            const query = new URLSearchParams(formData).toString();
-            console.log("Query-String:", query); // Sicherstellen, dass der Query-String korrekt ist
-
-            window.location.href = `/pages/search.html?${query}`;
-        });
-    } else {
-        console.error("Formular nicht gefunden!");
-    }
+  fetchAndDisplayResults();
+  
+  // Preserve form values in search page
+  const params = new URLSearchParams(window.location.search);
+  document.getElementById('search-input').value = params.get('search') || '';
+  document.getElementById('minPrice').value = params.get('minPrice') || '';
+  document.getElementById('maxPrice').value = params.get('maxPrice') || '';
 });
-
-
