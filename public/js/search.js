@@ -47,7 +47,7 @@ function displayResults(items) {
       <p class="price">${item.price} Gold</p>
       <p class="mana">${item.mana} Mana</p>
       <div class="description">${item.description}</div>
-      <a href="./detail.html?id=${item.id}" class="details-btn">Details</a>
+      <a href="./detail.html?id=${item.id}" class="details-btn">Details anzeigen</a>
     </div>
   `).join('');
 }
