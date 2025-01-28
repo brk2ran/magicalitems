@@ -125,7 +125,7 @@ header .controls .search-bar button:hover {
 
 header .controls .search-bar input::placeholder {
     font-family: 'Cinzel Decorative', serif;
-    color: white; /* Gleiche Farbe wie der Text */
+    color: rgb(7, 7, 7); /* Gleiche Farbe wie der Text */
     text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
     font-size: 0.9rem; /* Gleiche Schriftgröße wie der Text */
 }
