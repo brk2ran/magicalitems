@@ -149,6 +149,10 @@ footer {
     display: none;
 }
 
+#header-filters ::placeholder{
+    color: #333;
+}
+
 #header-filters.visible {
     display: block;
 }
@@ -398,7 +402,6 @@ input, select, textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #333;
 }
 
 /* Kontaktformular */
