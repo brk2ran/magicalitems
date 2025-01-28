@@ -157,6 +157,53 @@ footer {
     display: none; /* Versteckt, wenn nicht aktiv */
 }
 
+#additional-filters {
+    display: flex;
+    justify-content: center; /* Zentriert Filter in der Mitte */
+    margin-bottom: 1rem;
+}
+
+#additional-filter-form {
+    display: flex;
+    gap: 10px; /* Abstand zwischen den Elementen */
+    align-items: center;
+    background: #f9f9f9;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto;
+    max-width: 100%;
+}
+
+#additional-filter-form label {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+#additional-filter-form input,
+#additional-filter-form select {
+    font-size: 0.9rem;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: auto; /* Passt sich an */
+    max-width: 120px;
+}
+
+#additional-filter-form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#additional-filter-form button:hover {
+    background-color: #555;
+}
+
+
 /* --- Hauptbereich --- */
 main {
     padding: 20px;
