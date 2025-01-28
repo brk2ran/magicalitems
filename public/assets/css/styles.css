@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url("../assets/images/background.jpg"); /* Pfad anpassen */
+    background-image: url("../images/background.jpg"); /* Pfad anpassen */
     background-size: cover; /* Skaliert das Bild für den ganzen Bildschirm */
     background-position: center; /* Bild mittig ausrichten */
     background-attachment: fixed; /* Bleibt beim Scrollen fest */
