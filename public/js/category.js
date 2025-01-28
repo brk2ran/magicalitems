@@ -24,7 +24,6 @@ async function loadCategoryItems(categoryId) {
           <h3><strong>${item.name}</strong></h3>
           <p><strong>Preis:</strong> ${item.price}</p>
           <p><strong>Mana:</strong> ${item.mana}</p>
-          <p><strong>Beschreibung:</strong> ${item.description}</p>
           <button class="details-btn" onclick="window.location.href='detail.html?id=${item.id}'">Details ansehen</button>
           <div class="action-buttons">
             <button class="edit-btn" onclick="window.location.href='edit.html?id=${item.id}'">Bearbeiten</button>
