@@ -183,19 +183,22 @@ footer {
 
 #additional-filter-form {
     display: flex;
-    gap: 10px; /* Abstand zwischen den Elementen */
-    align-items: center;
+    gap: 15px; /* Abstand zwischen den Elementen */
+    align-items: center; /* Alle Elemente auf eine Linie bringen */
     background: #f9f9f9;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: auto;
     max-width: 100%;
+    font-family: 'Cinzel Decorative', serif; /* Gleiche Schrift wie im Rest */
 }
 
 #additional-filter-form label {
     font-size: 0.9rem;
     font-weight: bold;
+    margin-right: 5px; /* Kleiner Abstand zu den Eingabefeldern */
+    display: flex;
+    align-items: center; /* Damit das Label mit dem Input gleich hoch ist */
 }
 
 #additional-filter-form input,
@@ -206,6 +209,7 @@ footer {
     border-radius: 5px;
     width: auto; /* Passt sich an */
     max-width: 120px;
+    font-family: 'Cinzel Decorative', serif;
 }
 
 #additional-filter-form button {
@@ -215,6 +219,7 @@ footer {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Cinzel Decorative', serif;
 }
 
 #additional-filter-form button:hover {
