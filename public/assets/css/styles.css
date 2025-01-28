@@ -60,7 +60,7 @@ header .controls {
     display: flex;
     align-items: center;
     gap: 1rem; /* Abstand zwischen Suche und Button */
-    flex-wrap: wrap; /* Elemente umbrechen, falls nötig */
+    flex-wrap: nowrap; /* Elemente umbrechen, falls nötig vorher:wrap */
 }
 
 header .controls #add-item-btn {
@@ -85,15 +85,15 @@ header .controls .search-bar {
     font-family: 'Cinzel Decorative', serif;
     font-size: 0.9rem;
     display: flex;
-    align-items: flex-start; /* Elemente links ausrichten oder center */
+    align-items: center; /* Elemente links ausrichten oder center */
     position: relative;
     background-color: transparent;
     color: white;
     border: 2px solid white;
     border-radius: 20px;
-    padding: 0.5rem 1rem; /* Gleiche Abstände wie der Button */
+    padding: 0.3rem 0.8rem; /* Gleiche Abstände wie der Button vorher:0.5rem 1rem */
     flex: none; /* Verhindert, dass die Suchleiste Platz füllt */
-    width: auto; /* Passt sich dem Inhalt an */
+    width: 200px; /* Passt sich dem Inhalt an vorher:auto */
 }
 
 header .controls .search-bar input[type="text"] {
@@ -102,11 +102,25 @@ header .controls .search-bar input[type="text"] {
     background: transparent;
     color: white;
     font-size: 0.9rem; /* Gleiche Schriftgröße wie der Button */
-    text-transform: uppercase; /* Gleiche Großschreibung wie der Button */
     padding: 0;
     outline: none; /* Entfernt blauen Fokusrahmen */
-    width: auto; /* Passt sich dem Inhalt an */
+    width: 100px; /* Passt sich dem Inhalt an vorher:auto*/
     margin-bottom: 3px; /* Abstand zum Filter */
+}
+
+header .controls .search-bar button {
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+header .controls .search-bar button:hover {
+    background: rgba(255, 255, 255, 0.4);
 }
 
 header .controls .search-bar input::placeholder {
