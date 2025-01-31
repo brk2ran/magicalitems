@@ -165,7 +165,9 @@ app.get("/items", async (req, res) => {
 // 8.2 Ein neues Item erstellen (mit Bild-Upload)
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/placeholder.jpg';
+
+  const defaultImagePath = "/images/placeholder.jpg";
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : defaultImagePath;
   console.log("Bildpfad:", imagePath);
   console.log('Uploaded file:', req.file); // Log hochgeladene Datei
 

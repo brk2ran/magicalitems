@@ -39,6 +39,9 @@ document.getElementById("contact-form").addEventListener("submit", (event) => {
     }
 
     alert("Vielen Dank für Ihre Nachricht!");
+
+    document.getElementById("contact-form").reset();
+
 });
 
 // Hilfsfunktion zur Validierung der E-Mail-Adresse
