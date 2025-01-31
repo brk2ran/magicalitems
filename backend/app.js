@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Optional: Parsing von URL
 
 // Bereitstellen statischer Dateien
 app.use("/uploads", express.static(path.join('/data', "uploads")));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // **Check:** Falls das Verzeichnis /data/uploads noch nicht existiert, wird es angelegt.
 if (!fs.existsSync(uploadPath)) {
@@ -166,7 +167,7 @@ app.get("/items", async (req, res) => {
 app.post('/items', upload.single('image'), validateItem, async (req, res) => {
   const { name, price, mana, description, category_id } = req.body;
 
-  const defaultImagePath = "/images/placeholder.jpg";
+  const defaultImagePath = "/assets/images/placeholder.jpg";
   const imagePath = req.file ? `/uploads/${req.file.filename}` : defaultImagePath;
   console.log("Bildpfad:", imagePath);
   console.log('Uploaded file:', req.file); // Log hochgeladene Datei
